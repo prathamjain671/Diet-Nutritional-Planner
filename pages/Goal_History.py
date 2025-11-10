@@ -5,20 +5,33 @@ from zoneinfo import ZoneInfo
 
 st.subheader("View Past Goals")
 
-user = st.session_state.get("user")
-if not user:
+user_session = st.session_state.get("user")
+if not user_session:
     st.error("Please login to view this page!")
     st.stop()
 
 conn = create_connection()
 cursor = conn.cursor()
 
+user_email = user_session[0]
+
+cursor.execute("SELECT id FROM users WHERE email = ?", (user_email,))
+user_row = cursor.fetchone()
+
+if not user_row:
+    st.error("User profile not found! Please complete profile setup.")
+    conn.close()
+    st.stop()
+
+user_id = user_row[0]
+
+
 cursor.execute('''
         SELECT goal_type, target_weight, target_time_months, daily_calorie_change, target_calories, health_warning, timestamp
         FROM goals
         WHERE user_id = ?
         ORDER BY timestamp DESC
-''', (user[0],))
+''', (user_session[0],))
 
 rows = cursor.fetchall()
 conn.close()

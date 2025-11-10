@@ -4,16 +4,25 @@ from utils.db import create_connection
 
 st.set_page_config(page_title="Your Calculations", layout="centered")
 
-user = st.session_state.get("user")
-if not user:
+user_session = st.session_state.get("user")
+if not user_session:
     st.error("Please Login to access this page!")
     st.stop()
 
 conn = create_connection()
 cursor = conn.cursor()
 
-user_id = user[0]
+user_email = user_session[0]
 
+cursor.execute("SELECT id FROM users WHERE email = ?", (user_email,))
+user_row = cursor.fetchone()
+
+if not user_row:
+    st.error("User profile not found! Please complete profile setup.")
+    conn.close()
+    st.stop()
+
+user_id = user_row[0]
 
 cursor.execute('''
         SELECT tdee, bmi, bmi_category, water_intake, timestamp

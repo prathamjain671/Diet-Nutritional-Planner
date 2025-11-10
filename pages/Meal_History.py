@@ -6,20 +6,32 @@ from zoneinfo import ZoneInfo
 
 st.title("Meal History")
 
-user = st.session_state.get("user")
-if not user:
+user_session = st.session_state.get("user")
+if not user_session:
     st.error("Please login first to view this page!")
     st.stop()
 
 conn = create_connection()
 cursor = conn.cursor()
 
+user_email = user_session[0]
+
+cursor.execute("SELECT id FROM users WHERE email = ?", (user_email,))
+user_row = cursor.fetchone()
+
+if not user_row:
+    st.error("User profile not found! Please complete profile setup.")
+    conn.close()
+    st.stop()
+
+user_id = user_row[0]
+
 cursor.execute('''
         SELECT plan_type, custom_note, meal_plan, timestamp
         FROM meal_plans
         WHERE user_id = ?
         ORDER BY timestamp DESC
-''', (user[0],))
+''', (user_session[0],))
 
 plans = cursor.fetchall()
 conn.close()

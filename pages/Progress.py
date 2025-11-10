@@ -5,8 +5,8 @@ from utils.db import create_connection
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-user = st.session_state.get("user")
-if not user:
+user_session = st.session_state.get("user")
+if not user_session:
     st.error("Please login to view this page!")
     st.stop()
 
@@ -15,12 +15,24 @@ st.title("Your Progress")
 conn = create_connection()
 cursor = conn.cursor()
 
+user_email = user_session[0]
+
+cursor.execute("SELECT id FROM users WHERE email = ?", (user_email,))
+user_row = cursor.fetchone()
+
+if not user_row:
+    st.error("User profile not found! Please complete profile setup.")
+    conn.close()
+    st.stop()
+
+user_id = user_row[0]
+
 cursor.execute('''
         SELECT weight, height, age, goal, diet_preference, activity_level, timestamp
         FROM user_progress
         WHERE user_id = ?
         ORDER BY timestamp ASC
-''', (user[0],))
+''', (user_session[0],))
 
 progress = cursor.fetchall()
 
@@ -29,7 +41,7 @@ cursor.execute('''
         FROM calculations
         WHERE user_id = ?
         ORDER BY timestamp ASC
-''', (user[0],))
+''', (user_session[0],))
 
 calc = cursor.fetchall()
 

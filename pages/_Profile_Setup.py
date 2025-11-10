@@ -1,18 +1,50 @@
 import streamlit as st
-from utils.db import insert_calculations, insert_user, insert_meal_plan, insert_goal, insert_macros, insert_user_progress, create_table, create_connection
+from utils.db import insert_calculations, insert_user, insert_macros, insert_user_progress, create_connection
 from utils.calculations import find_tdee, find_bmi, protein_intake, calculate_macros, water_intake
 from streamlit_extras.switch_page_button import switch_page
 from utils.user import User
 
 st.set_page_config(page_title="Profile Setup", layout="centered")
+
+st.markdown(
+    """
+    <style>
+        [data-testid="stSidebar"] {
+            display: none;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("Complete Your Profile")
 
-if "new_username" not in st.session_state or "new_email" not in st.session_state:
-    st.warning("Profile setup already completed!")
+if "user" not in st.session_state or st.session_state.user is None:
+    st.warning("You must be logged in to setup a profile!")
+    st.info("Please return to the main page to login.")
+
+    if st.button("Go to Login Page"):
+        st.switch_page("Streamlit_App.py")
+    st.stop()
+
+user_email = st.session_state.user[0]
+user_name_from_auth = st.session_state.user[1]
+
+conn = create_connection()
+cursor = conn.cursor()
+cursor.execute("SELECT 1 FROM users WHERE email = ?", (user_email,))
+profile_exists = cursor.fetchone()
+conn.close()
+
+if profile_exists:
+    st.success("Your profile is already complete!")
+    st.info("Redirecting you to Dashboard...")
+
+    st.switch_page("pages/Dashboard.py")
     st.stop()
 
 with st.form("profile_form"):
-    name = st.text_input("Your Name")
+    name = st.text_input("Your Name", value=user_name_from_auth)
     age = st.number_input("Age", min_value=0, max_value=130, step=1)
     gender = st.selectbox("Gender", ["Male", "Female"])
     height = st.number_input("Height (cm)", min_value=0, max_value=300)
@@ -51,7 +83,7 @@ if submitted:
     insert_macros(user_id, protein, macros["Target Calories"], macros["Carbs (g)"], macros["Fats (g)"])
     insert_user_progress(user)
 
-    st.session_state.user = (user.id, user.name, user.email)
+    st.session_state.user = (user.email, user.name)
 
     st.success("Profile Setup Complete!")
     st.switch_page("pages/Dashboard.py")

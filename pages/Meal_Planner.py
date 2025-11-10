@@ -2,54 +2,125 @@ import streamlit as st
 from utils.db import insert_meal_plan, create_connection
 from utils.calculations import find_tdee, protein_intake
 from utils.meal_prompt import base_prompt
-from google import genai
-from markdown import markdown
-from bs4 import BeautifulSoup
+import google.generativeai as genai
 from utils.user import User
+from openai import OpenAI
 
-client = genai.Client(api_key='')
+if "provider" not in st.session_state:
+    st.session_state.provider = "Google Gemini"
+if "google_api_key" not in st.session_state:
+    st.session_state.google_api_key = ""
+if "openai_api_key" not in st.session_state:
+    st.session_state.openai_api_key = ""
 
-user = st.session_state.get("user")
-if not user:
+st.subheader("1. Choose Your AI Provider")
+provider = st.selectbox("Provider:", ["Google Gemini", "OpenAI ChatGPT"], key="provider")
+
+st.subheader("2. Enter your API Key")
+api_key_input = ""
+
+
+if st.session_state.provider == "Google Gemini":
+    api_key_input = st.text_input("Google AI API Key:", type="password", value=st.session_state.google_api_key, help="Get your key from Google AI Studio. We do not store your key.")
+
+    if api_key_input != st.session_state.google_api_key:
+        st.session_state.google_api_key = api_key_input
+        st.rerun()
+
+elif st.session_state.provider == "OpenAI ChatGPT":
+    api_key_input = st.text_input("OpenAI API Key:", type="password", value=st.session_state.google_api_key, help="Get your API key from OpenAI Dev Studio. We do not store your key.")
+
+    if api_key_input != st.session_state.openai_api_key:
+        st.session_state.openai_api_key = api_key_input
+        st.rerun()
+
+
+user_session = st.session_state.get("user")
+if not user_session:
     st.error("Please Login first to view this page!")
     st.stop()
 
 conn = create_connection()
 cursor = conn.cursor()
-cursor.execute("SELECT * FROM users WHERE id = ?", (user[0],))
+cursor.execute("SELECT * FROM users WHERE email = ?", (user_session[0],))
 row = cursor.fetchone()
 conn.close()
 if not row:
     st.error("User profile not found!")
-    st.stop()
+    st.stop()   
 
-user = User(*row[1:])
-user.id = row[0]
+user_obj = User(*row[1:])
+user_obj.id = row[0]
 
 st.title("Meal Planner")
-st.markdown(f"Hello, {user.name}! Lets get your personalized meal plan.")
 
-plan_type = st.radio("Select meal plan type:", ["Daily", "Weekly"] )
-custom_note = st.text_area("Add any specific cooking instructions (optional): ")
+client = None
+if st.session_state.provider == "Google Gemini":
+    if st.session_state.google_api_key:
+        try:
+            client = genai.Client(api_key = st.session_state.google_api_key)
+            client.list_models()
+            st.success("Google Gemini API Key is valid!")
+        except Exception as e:
+            st.error(f"Invalid Google API Key")
+            client = None
+    else:
+        st.warning("Please enter your Google AI API Key to use Gemini!")
 
-target_calories = find_tdee(user)
-protein_goal = protein_intake(user)
+if st.session_state.provider == "OpenAI ChatGPT":
+    if st.session_state.openai_api_key:
+        try:
+            client = OpenAI(api_key = st.session_state.openai_api_key)
+            client.models.list()
+            st.success("OpenAI API Key is valid!")
+        except Exception as e:
+            st.error(f"Invalid OpenAI API Key")
+            client = None
+    else:
+        st.warning("Please enter your OpenAI API Key to use ChatGPT!")
 
-prompt = base_prompt(plan_type, user, target_calories, protein_goal, custom_note)
+if client:
+    st.subheader("3. Generate Your Plan")
+    st.markdown(f"Hello, {user_obj.name}! Lets get your personalized meal plan.")
 
-if st.button("Generate Meal Plan"):
-    st.info("Generating your customized meal plan...")
+    plan_type = st.radio("Select meal plan type:", ["Daily", "Weekly"] )
+    custom_note = st.text_area("Add any specific cooking instructions (optional): ")
 
-    response = client.models.generate_content(
-        model='gemini-2.0-flash-001',contents=prompt
-    )
+    target_calories = find_tdee(user_obj)
+    protein_goal = protein_intake(user_obj)
 
-    text_response = markdown(response.text)
-    meal_plan = ''.join(BeautifulSoup(text_response,'html.parser').find_all(string=True))
+    prompt = base_prompt(plan_type, user_obj, target_calories, protein_goal, custom_note)
 
-    insert_meal_plan(user.id, plan_type, custom_note, prompt, meal_plan)
+    if st.button("Generate Meal Plan"):
+        st.info(f"Generating your customized meal plan with {st.session_state.provider}...")
 
-    st.success("Here is your meal plan:")
-    st.text_area("Meal Plan", meal_plan, height=600)
+        try:
+            meal_plan_markdown = ""
+
+            if st.session_state.provider == "Google Gemini":
+                response = client.models.generate_content(
+                    model='gemini-2.0-flash-001',contents=prompt
+                )
+                meal_plan_markdown = response.text
+
+            elif st.session_state.provider == "OpenAI ChatGPT":
+                response = client.chat.completions.create(
+                    model="gpt-5",
+                    messages=[
+                        {"role": "system", "content": "You are a helpful nutritional planner."},
+                        {"role": "user", "content": prompt}
+                    ]
+                )
+                meal_plan_markdown = response.choices[0].message.content
+
+            insert_meal_plan(user_obj.id, plan_type, custom_note, prompt, meal_plan_markdown)
+            st.success("Here is your meal plan:")
+            st.markdown(meal_plan_markdown) 
+
+        except Exception as e:
+            st.error(f"An error occurred while generating the plan: {e}")
+
+
+        
 
     

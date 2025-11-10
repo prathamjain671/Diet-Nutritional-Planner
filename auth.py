@@ -32,8 +32,11 @@ def login_user(username, password):
     hashed = hash_password(password)
 
     cursor.execute("SELECT * FROM auth WHERE username = ? AND password = ?", (username, hashed))
-    user = cursor.fetchone()
+    user_auth_row = cursor.fetchone()
     conn.close()
 
-    return user 
+    if user_auth_row:
+        return(user_auth_row[2], user_auth_row[1])
+
+    return None
 

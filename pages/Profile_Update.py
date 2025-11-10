@@ -3,17 +3,19 @@ from utils.db import create_connection, insert_user_progress, insert_calculation
 from utils.calculations import find_tdee, find_bmi, water_intake, calculate_macros, protein_intake
 from utils.user import User
 
-user = st.session_state.get("user")
-if not user:
+user_session = st.session_state.get("user")
+if not user_session:
     st.error("Please login to view this page!")
     st.stop()
 
 st.title("Update Your Profile")
 
-conn = create_connection()
+conn = create_connection()  
 cursor = conn.cursor()
 
-cursor.execute("SELECT * FROM users WHERE id = ?", (user[0],))
+user_email = user_session[0]
+
+cursor.execute("SELECT * FROM users WHERE email = ?", (user_email,))
 data = cursor.fetchone()
 conn.close()
 
