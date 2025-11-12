@@ -92,8 +92,8 @@ with col1:
             st.metric(label="Daily Water Intake", value=f"{water_goal:.2f} L")
         with c2:
             st.metric(label="Daily Protein Goal", value=f"{protein_goal:.2f} g")
-            st.metric(label="Daily Carbs Goal", value=f"{carbs_goal:.2f} kcal")
-            st.metric(label="Daily Fats Goal", value=f"{fats_goal:.2f} kcal")
+            st.metric(label="Daily Carbs Goal", value=f"{carbs_goal:.2f} g")
+            st.metric(label="Daily Fats Goal", value=f"{fats_goal:.2f} g")
 
 
 

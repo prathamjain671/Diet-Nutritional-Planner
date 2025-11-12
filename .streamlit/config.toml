@@ -1,7 +1,8 @@
 [theme]
 base="light"                  
-primaryColor="#FF4B4B"        
-backgroundColor="#FFFFFF"     
-secondaryBackgroundColor="#F0F2F6" 
-textColor="#333333"           
-font="Space Grotesk"        
+primaryColor="#DE7356"        
+backgroundColor="#141414"     
+secondaryBackgroundColor="#57554eff" 
+textColor="#EFEEE5"           
+font="Space Mono"        
+borderColor="#7a776dff"
