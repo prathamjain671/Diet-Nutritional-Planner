@@ -120,6 +120,16 @@ def insert_user(user):
     conn.close()
     return user_id
 
+def update_user(user):
+    conn = create_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        UPDATE users SET name = ?, age = ?, gender = ?, email = ?, height = ?, weight = ?, goal = ?, diet_preference = ?, activity_level = ?
+        WHERE id = ?
+    ''', (user.name, user.age, user.gender, user.email, user.height, user.weight, user.goal, user.diet_preference, user.activity_level, user.id))
+    conn.commit()
+    conn.close()
+
 
 def insert_calculations(user_id, tdee, bmi, bmi_category, water):
     conn = create_connection()

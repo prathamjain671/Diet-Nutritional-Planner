@@ -32,7 +32,7 @@ cursor.execute('''
         FROM user_progress
         WHERE user_id = ?
         ORDER BY timestamp ASC
-''', (user_session[0],))
+''', (user_id,))
 
 progress = cursor.fetchall()
 
@@ -41,7 +41,7 @@ cursor.execute('''
         FROM calculations
         WHERE user_id = ?
         ORDER BY timestamp ASC
-''', (user_session[0],))
+''', (user_id,))
 
 calc = cursor.fetchall()
 
@@ -72,26 +72,33 @@ if not progress or not calc:
     st.warning("Not enough data for visualization!")
 else:
     st.subheader("Visualize Your Progress")
+    
+    df_progress = pd.DataFrame(progress, columns=["Weight (kg)", "Height (cm)", "Age", "Goal", "Diet", "Activity", "Date"])
+    df_calc = pd.DataFrame(calc, columns=["TDEE", "BMI", "BMI Category", "Date"])
 
     df_progress["Date"] = pd.to_datetime(df_progress["Date"])
     df_calc["Date"] = pd.to_datetime(df_calc["Date"])
 
+    df_weight_plot = df_progress.groupby(df_progress['Date'].dt.date)['Weight (kg)'].last().reset_index()
+    df_tdee_plot = df_calc.groupby(df_calc['Date'].dt.date)['TDEE'].last().reset_index()
+    df_bmi_plot = df_calc.groupby(df_calc['Date'].dt.date)['BMI'].last().reset_index()
+
     fig, ax = plt.subplots()
-    ax.plot(df_progress["Date"], df_progress["Weight (kg)"], marker="o", color="blue")
+    ax.plot(df_weight_plot["Date"], df_weight_plot["Weight (kg)"], marker="o", color="blue")
     ax.set_title("Weight Over Time")
     ax.set_xlabel("Date")
     ax.set_ylabel("Weight (kg)")
     st.pyplot(fig)
 
     fig1, ax1 = plt.subplots()
-    ax1.plot(df_calc["Date"], df_calc["TDEE"], marker="s", color="green")
+    ax1.plot(df_tdee_plot["Date"], df_tdee_plot["TDEE"], marker="s", color="green")
     ax1.set_title("TDEE Over Time")
     ax1.set_xlabel("Date")
     ax1.set_ylabel("Calories")
     st.pyplot(fig1)
 
     fig2, ax2 = plt.subplots()
-    ax2.plot(df_calc["Date"], df_calc["BMI"], marker="^", color="red")
+    ax2.plot(df_bmi_plot["Date"], df_bmi_plot["BMI"], marker="^", color="red")
     ax2.set_title("BMI Over Time")
     ax2.set_xlabel("Date")
     ax2.set_ylabel("BMI")

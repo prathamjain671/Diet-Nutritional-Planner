@@ -1,4 +1,4 @@
-from utils.db import insert_goal
+from utils.db import insert_goal, create_connection
 
 def find_tdee(user):
     bmr = 0
@@ -61,8 +61,10 @@ def protein_intake(user):
     return protein
 
 
-def weight_loss(user, target_weight=None, months=None):
-    weight_loss_needed = user.weight - target_weight
+def weight_loss(user, amount_to_lose=None, months=None):
+
+    weight_loss_needed=amount_to_lose
+    target_weight = user.weight - amount_to_lose
     days = months * 30
     total_calorie_deficit = weight_loss_needed * 7700      # As 1kg of fat = 7700 cal
     daily_deficit = total_calorie_deficit / days
@@ -103,8 +105,10 @@ def weight_loss(user, target_weight=None, months=None):
     return warning if warning else message
 
 
-def weight_gain(user, target_weight, months):
-    weight_gain_needed = target_weight - user.weight
+def weight_gain(user, amount_to_gain, months):
+
+    weight_gain_needed=amount_to_gain
+    target_weight = user.weight + amount_to_gain
     days = months * 30
     total_calorie_surplus = weight_gain_needed * 7700
     daily_surplus = total_calorie_surplus / days
@@ -135,7 +139,20 @@ def weight_gain(user, target_weight, months):
 
 
 def calculate_macros(user):
-    target_calories = find_tdee(user)
+
+    target_calories =None
+    conn = create_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT target_calories FROM goals WHERE user_id = ? ORDER BY timestamp DESC LIMIT 1", (user.id,))
+    goal_row = cursor.fetchone()
+    conn.close()
+
+    if goal_row and goal_row[0] is not None:
+        target_calories = goal_row[0]
+    else:
+        target_calories = find_tdee(user)
+        
 
     if user.goal.lower() == "weight loss":
         protein_ratio = 0.40

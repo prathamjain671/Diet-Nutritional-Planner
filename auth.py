@@ -1,10 +1,14 @@
 from utils.db import create_connection
-import hashlib
+from passlib.context import CryptContext
 import sqlite3
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
+    return pwd_context.hash(password)
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
 
 
 def register_user(username, email, password):
@@ -31,12 +35,15 @@ def login_user(username, password):
 
     hashed = hash_password(password)
 
-    cursor.execute("SELECT * FROM auth WHERE username = ? AND password = ?", (username, hashed))
+    cursor.execute("SELECT * FROM auth WHERE username = ?", (username,))
     user_auth_row = cursor.fetchone()
     conn.close()
 
     if user_auth_row:
-        return(user_auth_row[2], user_auth_row[1])
+        hashed_password_from_db = user_auth_row[3]
+
+        if verify_password(password, hashed_password_from_db):
+            return(user_auth_row[2], user_auth_row[1])
 
     return None
 

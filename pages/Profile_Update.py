@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.db import create_connection, insert_user_progress, insert_calculations, insert_macros
+from utils.db import create_connection, insert_user_progress, insert_calculations, insert_macros, update_user
 from utils.calculations import find_tdee, find_bmi, water_intake, calculate_macros, protein_intake
 from utils.user import User
 
@@ -54,6 +54,7 @@ activity_display = st.selectbox(
 temp_user.activity_level = activity_options[activity_display]
 
 if st.button("Update Profile"):
+    update_user(temp_user)
     insert_user_progress(temp_user)
 
     tdee = find_tdee(temp_user)

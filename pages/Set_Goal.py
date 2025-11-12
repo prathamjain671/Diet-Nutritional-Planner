@@ -21,21 +21,26 @@ if not row:
     st.error("User profile not found!")
     st.stop()
 
-user_session = User(*row[1:])
-user_session.id = row[0]
+user = User(*row[1:])
+user.id = row[0]
 
 st.set_page_config(page_title="Set Goal", layout="centered")
 st.title("Set Your Weight Goal")
 
 goal_type = st.radio("What is your goal?", ["Weight Loss", "Weight Gain"])
-target_weight = st.number_input("Enter your target weight (kg)", min_value=10, max_value=300)
+
+if goal_type == "Weight Loss":
+    amount = st.number_input("How many kgs do you want to lose?", min_value=0.5, max_value=100.0, step=0.5)
+else:
+    amount = st.number_input("How many kgs do you want to gain?", min_value=0.5, max_value=100.0, step=0.5)
+
 months = st.number_input("In how many months do you want to achieve this?", min_value=1, max_value=100)
 
 if st.button("Set Goal"):
     if goal_type == "Weight Loss":
-        result = weight_loss(user_session, target_weight, months)
+        result = weight_loss(user, amount_to_lose=amount, months=months)
     else:
-        result = weight_gain(user_session, target_weight, months)
+        result = weight_gain(user, amount_to_gain=amount, months=months)
 
     if result.startswith("\nYour goal may be unhealthy") or "unhealthy" in result.lower():
         st.warning(result)
