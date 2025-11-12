@@ -92,7 +92,7 @@ if client:
     prompt = base_prompt(plan_type, user_obj, target_calories, protein_goal, custom_note)
 
     if st.button("Generate Meal Plan"):
-        st.info(f"Generating your customized meal plan with {st.session_state.provider}...")
+        st.spinner(f"Generating your customized meal plan with {st.session_state.provider}...")
 
         try:
             meal_plan_markdown = ""

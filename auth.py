@@ -1,14 +1,23 @@
 from utils.db import create_connection
-from passlib.context import CryptContext
+import bcrypt
 import sqlite3
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def hash_password(password):
-    return pwd_context.hash(password)
+    password_bytes = password.encode('utf-8')
+    salt = bcrypt.gensalt()
+    hashed_bytes = bcrypt.hashpw(password_bytes, salt)
+
+    return hashed_bytes.decode('utf-8')
 
 def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        password_bytes = plain_password.encode('utf-8')
+        hashed_bytes = hashed_password.encode('utf-8')
+        return bcrypt.checkpw(password_bytes, hashed_bytes)
+    except Exception as e:
+        print(f"Error during password verification: {e}")
+        return False
 
 
 def register_user(username, email, password):

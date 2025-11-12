@@ -45,9 +45,9 @@ if profile_exists:
 
 with st.form("profile_form"):
     name = st.text_input("Your Name", value=user_name_from_auth)
-    age = st.number_input("Age", min_value=0, max_value=130, step=1)
+    age = st.number_input("Age", min_value=1, max_value=130, step=1)
     gender = st.selectbox("Gender", ["Male", "Female"])
-    height = st.number_input("Height (cm)", min_value=0, max_value=300)
+    height = st.number_input("Height (cm)", min_value=1, max_value=300)
     weight = st.number_input("Weight (kg)", min_value=10, max_value=300)
     goal = st.selectbox("Your Goal", ["Weight Loss", "Weight Gain", "Muscle Gain", "Maintenance"])
     diet_preference = st.selectbox("Dietary Preference", ["Vegetarian", "Non-Vegetarian", "Eggitarian"])
