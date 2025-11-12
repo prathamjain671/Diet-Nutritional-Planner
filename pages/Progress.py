@@ -31,7 +31,7 @@ cursor.execute('''
         SELECT weight, height, age, goal, diet_preference, activity_level, timestamp
         FROM user_progress
         WHERE user_id = ?
-        ORDER BY timestamp ASC
+        ORDER BY timestamp DESC
 ''', (user_id,))
 
 progress = cursor.fetchall()
@@ -40,7 +40,7 @@ cursor.execute('''
         SELECT tdee, bmi, bmi_category, timestamp
         FROM calculations
         WHERE user_id = ?
-        ORDER BY timestamp ASC
+        ORDER BY timestamp DESC
 ''', (user_id,))
 
 calc = cursor.fetchall()

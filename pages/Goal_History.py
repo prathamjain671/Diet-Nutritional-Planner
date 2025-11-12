@@ -31,7 +31,7 @@ cursor.execute('''
         FROM goals
         WHERE user_id = ?
         ORDER BY timestamp DESC
-''', (user_session[0],))
+''', (user_row[0],))
 
 rows = cursor.fetchall()
 conn.close()

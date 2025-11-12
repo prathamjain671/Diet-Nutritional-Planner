@@ -1,4 +1,5 @@
-from utils.db import insert_goal, create_connection
+from utils.db import insert_goal, create_connection, update_user, insert_user_progress, insert_calculations, insert_macros
+from utils.user import User
 
 def find_tdee(user):
     bmr = 0
@@ -188,3 +189,24 @@ def water_intake(user):
     daily_water_l = daily_water_ml / 1000
 
     return daily_water_l
+
+def log_weight(user, new_weight):
+    try:
+        user.weight = new_weight
+        update_user(user)
+
+        tdee = find_tdee(user)
+        bmi, bmi_category = find_bmi(user)
+        protein = protein_intake(user)
+        water = water_intake(user)
+        macros = calculate_macros(user)
+
+        insert_calculations(user.id, tdee, bmi, bmi_category, water)
+        insert_macros(user.id, protein, macros["Target Calories"], macros["Carbs (g)"], macros["Fats (g)"])
+        insert_user_progress(user)
+
+        return True, "Logged New Weight!"
+    except Exception as e:
+        print("Error while logging weight! Try again later.")
+        return False, "An error occurred!"
+    
