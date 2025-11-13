@@ -55,7 +55,7 @@ if st.session_state.page_choice == "Login":
                 else:
                     st.session_state.new_email = user_email
                     st.session_state.new_username = user_name
-                    st.switch_page("pages/_Profile_Setup.py")
+                    st.switch_page("pages\Profile_Update.py")
             else:
                 st.error("Invalid Credentials!")
 
@@ -83,11 +83,8 @@ elif st.session_state.page_choice == "Register":
 
                 if success:
                     st.success(message)
-
-                    st.session_state.new_username = username
-                    st.session_state.new_email = email
-
-                    st.switch_page("pages/_Profile_Setup.py")
+                    st.session_state.user = (email, username)
+                    st.switch_page("pages\Profile_Update.py")
                 else:
                     st.error(message)
     with col2:

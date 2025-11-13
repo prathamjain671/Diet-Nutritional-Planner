@@ -21,14 +21,14 @@ api_key_input = ""
 
 
 if st.session_state.provider == "Google Gemini":
-    api_key_input = st.text_input("Google AI API Key:", type="password", value=st.session_state.google_api_key, help="Get your key from Google AI Studio. We do not store your key.")
-
+    api_key_input = st.text_input("Google AI API Key:", type="password", value=st.session_state.google_api_key, placeholder="Just Relax! We do not store your key.", help="Get your key from Google AI Studio. We do not store your key.")
+    
     if api_key_input != st.session_state.google_api_key:
         st.session_state.google_api_key = api_key_input
         st.rerun()
 
 elif st.session_state.provider == "OpenAI ChatGPT":
-    api_key_input = st.text_input("OpenAI API Key:", type="password", value=st.session_state.google_api_key, help="Get your API key from OpenAI Dev Studio. We do not store your key.")
+    api_key_input = st.text_input("OpenAI API Key:", type="password", value=st.session_state.google_api_key, placeholder="Just Relax! We do not store your key.", help="Get your API key from OpenAI Dev Studio. We do not store your key.")
 
     if api_key_input != st.session_state.openai_api_key:
         st.session_state.openai_api_key = api_key_input
