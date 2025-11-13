@@ -8,6 +8,47 @@ import altair as alt
 
 st.set_page_config(page_title="Dashboard", layout="wide")
 
+st.markdown(
+    """
+    <style>
+    .colored-container {
+        background-color: #74746E; 
+        padding: 10px; /* Made padding a bit smaller */
+        border-radius: 10px;
+        margin-bottom: 9px; /* Space between box and text */
+    }
+    
+    /* This styles the "Dashboard" title */
+    .colored-container h3 {
+        color: #FFFFFF; /* White color */
+        font-family: 'Times New Roman', Times, serif; /* Serif font */
+        font-weight: bold;
+        margin: 0; /* Remove default margins */
+        padding: 0;
+        text-align: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# 2. Build the HTML string with ONLY the title
+title_box_html = """
+<div class="colored-container">
+    <h3>Dashboard</h3>
+</div>
+"""
+
+# 3. Put everything in the sidebar
+with st.sidebar.container(border=True):
+    with st.container():
+        # Render the title box
+        st.markdown(title_box_html, unsafe_allow_html=True)
+        
+        # Now, render the text *outside* the box
+        st.text("Welcome to your dashboard! ")
+        st.text("Here you can view you key metrics, log your weight, navigate to other features and so much more!")
+
 user_session = st.session_state.get("user")
 if not user_session:
     st.error("Please log in first!")
