@@ -58,9 +58,14 @@ st.markdown("---")
 if calc:
     tdee, bmi, bmi_category, water_intake, timestamp = calc
     st.subheader("Calorie & Health Info")
-    st.markdown(f"- **TDEE (Total Daily Energy Expenditure)**: {int(tdee)}kcal/day")
-    st.markdown(f"- **BMI**: {round(bmi, 2)} {bmi_category.title()}")
-    st.markdown(f"- **Water Intake Goal**: {round(water_intake, 2)}L/day")
+    st.markdown(f"- **TDEE (Total Daily Energy Expenditure)**: {int(tdee)}kcal/day",
+                 help="**TDEE**: Total Daily Energy Expenditure. The calories you burn per day. To lose weight, you must eat less than this.")
+    
+    st.markdown(f"- **BMI**: {round(bmi, 2)} {bmi_category.title()}", 
+                help="**BMI**: Body Mass Index. A measure of body fat based on height and weight.")
+    
+    st.markdown(f"- **Water Intake Goal**: {round(water_intake, 2)}L/day", 
+                help="**Water Intake Goal**: Your daily water intake goal, calculated based on your body weight.")
 else:
     st.warning("No records found!")
 
