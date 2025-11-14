@@ -2,6 +2,16 @@ import streamlit as st
 from utils.db import create_connection
 from utils.calculations import weight_loss, weight_gain
 from utils.user import User
+from utils.custom_css import load_css
+from utils.ui_helper import render_sidebar_info
+
+st.set_page_config(page_title="Set Goal", layout="wide")
+load_css()
+
+render_sidebar_info(
+    title="Set Goal",
+    text_lines=["Define your next weight target and a timeframe to achieve it."]
+)
 
 user_session = st.session_state.get("user")
 if not user_session:

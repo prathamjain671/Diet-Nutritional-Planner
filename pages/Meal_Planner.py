@@ -5,6 +5,16 @@ from utils.meal_prompt import base_prompt
 import google.generativeai as genai
 from utils.user import User
 from openai import OpenAI
+from utils.custom_css import load_css
+from utils.ui_helper import render_sidebar_info
+
+st.set_page_config(page_title="Meal Planner", layout="wide")
+load_css()
+
+render_sidebar_info(
+    title="Meal Planner",
+    text_lines=["Generate a new, personalized meal plan tailored to your goals."]
+)
 
 if "provider" not in st.session_state:
     st.session_state.provider = "Google Gemini"

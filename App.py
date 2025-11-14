@@ -1,8 +1,9 @@
 import streamlit as st
 from utils.db import create_table, create_connection
 from auth import login_user, register_user
+from utils.custom_css import load_css
 
-
+load_css()
 st.set_page_config(page_title="Digital Diet & Nutritional Planner", layout="centered")
 
 st.markdown(
@@ -35,7 +36,7 @@ if st.session_state.page_choice == "Login":
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("Login", use_container_width=True, type="primary"):
+        if st.button("Login", width='stretch', type="primary"):
             user = login_user(username, password)
 
             if user:
@@ -60,7 +61,7 @@ if st.session_state.page_choice == "Login":
                 st.error("Invalid Credentials!")
 
     with col2:
-        if st.button("Don't have an account? Sign up", use_container_width=True):
+        if st.button("Don't have an account? Sign up", width='stretch'):
             st.session_state.page_choice = "Register"
             st.rerun()
 
@@ -75,7 +76,7 @@ elif st.session_state.page_choice == "Register":
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("Register", use_container_width=True, type="primary"):
+        if st.button("Register", width='stretch', type="primary"):
             if password != confirm_password:
                 st.error("Passwords do not match!")
             else:
@@ -88,7 +89,7 @@ elif st.session_state.page_choice == "Register":
                 else:
                     st.error(message)
     with col2:
-        if st.button("Have an account? Log in", use_container_width=True):
+        if st.button("Have an account? Log in", width='stretch'):
             st.session_state.page_choice = "Login"
             st.rerun()
         

@@ -4,6 +4,17 @@ import matplotlib.pyplot as plt
 from utils.db import create_connection
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from utils.custom_css import load_css
+from utils.ui_helper import render_sidebar_info
+import altair as alt
+
+st.set_page_config(page_title="Progress", layout="wide")
+load_css()
+
+render_sidebar_info(
+    title="Progress",
+    text_lines=["See detailed charts of your weight, BMI, and TDEE over time."]
+)
 
 user_session = st.session_state.get("user")
 if not user_session:
@@ -56,7 +67,7 @@ else:
     df_progress["Date"] = pd.to_datetime(df_progress["Date"])
     df_progress["Date"] = df_progress["Date"].dt.tz_localize("UTC").dt.tz_convert("Asia/Kolkata")
     df_progress["Date"] = df_progress["Date"].dt.strftime("%d %b %Y, %I:%M %p")
-    st.dataframe(df_progress, use_container_width=True)
+    st.dataframe(df_progress, width='stretch')
 
 if not calc:
     st.info("No calculations data found!")
@@ -66,43 +77,63 @@ else:
     df_calc["Date"] = pd.to_datetime(df_calc["Date"])
     df_calc["Date"] = df_calc["Date"].dt.tz_localize("UTC").dt.tz_convert("Asia/Kolkata")
     df_calc["Date"] = df_calc["Date"].dt.strftime("%d %b %Y, %I:%M %p")
-    st.dataframe(df_calc, use_container_width=True)
+    st.dataframe(df_calc, width='stretch')
 
 if not progress or not calc:
     st.warning("Not enough data for visualization!")
 else:
-    st.subheader("Visualize Your Progress")
-    
-    df_progress = pd.DataFrame(progress, columns=["Weight (kg)", "Height (cm)", "Age", "Goal", "Diet", "Activity", "Date"])
-    df_calc = pd.DataFrame(calc, columns=["TDEE", "BMI", "BMI Category", "Date"])
+    with st.container(border=True):
+        st.subheader("Visualize Your Progress")
 
-    df_progress["Date"] = pd.to_datetime(df_progress["Date"])
-    df_calc["Date"] = pd.to_datetime(df_calc["Date"])
+        df_progress_raw = pd.DataFrame(progress, columns=["Weight (kg)", "Height (cm)", "Age", "Goal", "Diet", "Activity", "Date"])
+        df_progress_raw["Date"] = pd.to_datetime(df_progress_raw["Date"])
+        df_progress_raw["Day"] = df_progress_raw["Date"].dt.date
+        df_weight_plot = df_progress_raw.groupby("Day").last().reset_index()
 
-    df_weight_plot = df_progress.groupby(df_progress['Date'].dt.date)['Weight (kg)'].last().reset_index()
-    df_tdee_plot = df_calc.groupby(df_calc['Date'].dt.date)['TDEE'].last().reset_index()
-    df_bmi_plot = df_calc.groupby(df_calc['Date'].dt.date)['BMI'].last().reset_index()
+        df_calc_raw = pd.DataFrame(calc, columns=["TDEE", "BMI", "BMI Category", "Date"])
+        df_calc_raw["Date"] = pd.to_datetime(df_calc_raw["Date"])
+        df_calc_raw["Day"] = df_calc_raw["Date"].dt.date
+        df_calc_plot = df_calc_raw.groupby("Day").last().reset_index()
+        
 
-    fig, ax = plt.subplots()
-    ax.plot(df_weight_plot["Date"], df_weight_plot["Weight (kg)"], marker="o", color="blue")
-    ax.set_title("Weight Over Time")
-    ax.set_xlabel("Date")
-    ax.set_ylabel("Weight (kg)")
-    st.pyplot(fig)
+        with st.container(border=True):
+            st.markdown("#### Weight Over Time")
+            weight_chart = alt.Chart(df_weight_plot).mark_line(point=True, color="#0d6efd").encode(
+                x=alt.X('Day', type='temporal', title=None, axis=alt.Axis(format="%d-%b")),
+                y=alt.Y('Weight (kg)', title=None),
+                
+                tooltip=[
+                    alt.Tooltip('Date', format="%Y-%m-%d", title="Date"),
+                    alt.Tooltip('Date', format="%I:%M %p", title="Time"),
+                    'Weight (kg)'
+                ]
+            ).interactive()
+            st.altair_chart(weight_chart)
 
-    fig1, ax1 = plt.subplots()
-    ax1.plot(df_tdee_plot["Date"], df_tdee_plot["TDEE"], marker="s", color="green")
-    ax1.set_title("TDEE Over Time")
-    ax1.set_xlabel("Date")
-    ax1.set_ylabel("Calories")
-    st.pyplot(fig1)
+        with st.container(border=True):
+            st.markdown("#### TDEE Over Time")
+            tdee_chart = alt.Chart(df_calc_plot).mark_line(point=True, color="#28a745").encode(
+                x=alt.X('Day', type='temporal', title=None, axis=alt.Axis(format="%d-%b")),
+                y=alt.Y('TDEE', title=None),
+                
+                tooltip=[
+                    alt.Tooltip('Date', format="%Y-%m-%d", title="Date"),
+                    alt.Tooltip('Date', format="%I:%M %p", title="Time"),
+                    'TDEE'
+                ]
+            ).interactive()
+            st.altair_chart(tdee_chart)
 
-    fig2, ax2 = plt.subplots()
-    ax2.plot(df_bmi_plot["Date"], df_bmi_plot["BMI"], marker="^", color="red")
-    ax2.set_title("BMI Over Time")
-    ax2.set_xlabel("Date")
-    ax2.set_ylabel("BMI")
-    st.pyplot(fig2)
-    
-
-    
+        with st.container(border=True):
+            st.markdown("#### BMI Over Time")
+            bmi_chart = alt.Chart(df_calc_plot).mark_line(point=True, color="#dc3545").encode(
+                x=alt.X('Day', type='temporal', title=None, axis=alt.Axis(format="%d-%b")),
+                y=alt.Y('BMI', title=None),
+                
+                tooltip=[
+                    alt.Tooltip('Date', format="%Y-%m-%d", title="Date"),
+                    alt.Tooltip('Date', format="%I:%M %p", title="Time"),
+                    'BMI'
+                ]
+            ).interactive()
+            st.altair_chart(bmi_chart)

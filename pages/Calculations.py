@@ -1,8 +1,16 @@
 import streamlit as st
 import sqlite3
 from utils.db import create_connection
+from utils.custom_css import load_css
+from utils.ui_helper import render_sidebar_info
 
-st.set_page_config(page_title="Your Calculations", layout="centered")
+st.set_page_config(page_title="Calculations", layout="wide")
+load_css()
+
+render_sidebar_info(
+    title="Calculations",
+    text_lines=["View a snapshot of your latest calculated health metrics and macro breakdown."]
+)
 
 user_session = st.session_state.get("user")
 if not user_session:

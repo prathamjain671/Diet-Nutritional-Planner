@@ -2,6 +2,17 @@ import streamlit as st
 from utils.db import create_connection, insert_user_progress, insert_calculations, insert_macros, update_user, insert_user
 from utils.calculations import find_tdee, find_bmi, water_intake, calculate_macros, protein_intake
 from utils.user import User
+from utils.custom_css import load_css
+from utils.ui_helper import render_sidebar_info
+import time
+
+st.set_page_config(page_title="Profile Update", layout="wide")
+load_css()
+
+render_sidebar_info(
+    title="Profile Update",
+    text_lines=["Manage your health data like weight, height, activity level, and dietary preferences."]
+)
 
 user_session = st.session_state.get("user")
 if not user_session:
@@ -139,6 +150,7 @@ if submitted:
         st.switch_page("pages/Dashboard.py")
     else:
         st.success("Profile Updated Successfully!")
+        time.sleep(1)
         st.rerun()
     
     

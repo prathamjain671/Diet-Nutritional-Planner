@@ -2,7 +2,16 @@ import streamlit as st
 from utils.db import create_connection
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from utils.custom_css import load_css
+from utils.ui_helper import render_sidebar_info
 
+st.set_page_config(page_title="Meal History", layout="wide")
+load_css()
+
+render_sidebar_info(
+    title="Meal History",
+    text_lines=["View all the meal plans you've generated in the past."]
+)
 
 st.title("Meal History")
 

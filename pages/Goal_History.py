@@ -2,6 +2,16 @@ import streamlit as st
 from utils.db import create_connection
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from utils.custom_css import load_css
+from utils.ui_helper import render_sidebar_info
+
+st.set_page_config(page_title="Goal History", layout="wide")
+load_css()
+
+render_sidebar_info(
+    title="Goal History",
+    text_lines=["Review all your previous weight goals and their details."]
+)
 
 st.subheader("View Past Goals")
 

@@ -3,6 +3,17 @@ from utils.user import User
 from utils.db import create_connection
 from auth import change_password, update_username
 import time
+from utils.custom_css import load_css
+from utils.ui_helper import render_sidebar_info
+
+st.set_page_config(page_title="Account", layout="wide")
+load_css()
+
+render_sidebar_info(
+    title="Account",
+    text_lines=["Manage your account security, change your username or password, and log out."]
+)
+
 user_session = st.session_state.get("user")
 if not user_session:
     st.error("Please login to view this page!")
@@ -88,12 +99,12 @@ st.divider()
 
 col1, col2 = st.columns(2)
 with col1:
-    if st.button("Log Out", type="primary",use_container_width=True):
+    if st.button("Log Out", type="primary",width='stretch'):
         for key in st.session_state.keys():
             del st.session_state[key]
 
-        st.switch_page("Streamlit_App.py")
+        st.switch_page("App.py")
 
 with col2:
-    if st.button("Go to Dashboard",use_container_width=True,type="primary"):
+    if st.button("Go to Dashboard",width='stretch',type="primary"):
         st.switch_page("pages/Dashboard.py")

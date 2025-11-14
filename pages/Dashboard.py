@@ -5,49 +5,20 @@ from datetime import datetime
 from utils.calculations import log_weight
 from utils.user import User
 import altair as alt
+from utils.custom_css import load_css
+from utils.ui_helper import render_sidebar_info
+import time
 
 st.set_page_config(page_title="Dashboard", layout="wide")
+load_css()
 
-st.markdown(
-    """
-    <style>
-    .colored-container {
-        background-color: #74746E; 
-        padding: 10px; /* Made padding a bit smaller */
-        border-radius: 10px;
-        margin-bottom: 9px; /* Space between box and text */
-    }
-    
-    /* This styles the "Dashboard" title */
-    .colored-container h3 {
-        color: #FFFFFF; /* White color */
-        font-family: 'Times New Roman', Times, serif; /* Serif font */
-        font-weight: bold;
-        margin: 0; /* Remove default margins */
-        padding: 0;
-        text-align: center;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
+render_sidebar_info(
+    title="Dashboard",
+    text_lines=[
+        "Welcome to the dashboard!",
+        "Here you can view you key metrics, log your weight, navigate to other features and so much more!   "
+    ]
 )
-
-# 2. Build the HTML string with ONLY the title
-title_box_html = """
-<div class="colored-container">
-    <h3>Dashboard</h3>
-</div>
-"""
-
-# 3. Put everything in the sidebar
-with st.sidebar.container(border=True):
-    with st.container():
-        # Render the title box
-        st.markdown(title_box_html, unsafe_allow_html=True)
-        
-        # Now, render the text *outside* the box
-        st.text("Welcome to your dashboard! ")
-        st.text("Here you can view you key metrics, log your weight, navigate to other features and so much more!")
 
 user_session = st.session_state.get("user")
 if not user_session:
@@ -157,7 +128,7 @@ with col2:
                             alt.Tooltip('Date', format="%H:%M:%S", title="Time"), 'Weight (kg)']
             ).interactive()
 
-            st.altair_chart(chart, use_container_width=True)
+            st.altair_chart(chart)
 
 st.divider()
 
@@ -227,6 +198,7 @@ with col2:
                 success, message = log_weight(user, quick_weight)
                 if success:
                     st.success(message)
+                    time.sleep(1)
                     st.rerun()
                 else:
                     st.error(message)
@@ -238,27 +210,27 @@ with st.container():
     c1, c2, c3, c4 = st.columns(4)
     
     with c1:
-        if st.button("Update Profile", use_container_width=True):
+        if st.button("Update Profile", width='stretch'):
             st.switch_page("pages/Profile_Update.py")
-        if st.button("Set Weight Goal", use_container_width=True):
+        if st.button("Set Weight Goal", width='stretch'):
             st.switch_page("pages/Set_Goal.py")
             
     with c2:
-        if st.button("Generate New Meal Plan", use_container_width=True):
+        if st.button("Generate New Meal Plan", width='stretch'):
             st.switch_page("pages/Meal_Planner.py")
-        if st.button("View Meal History", use_container_width=True):
+        if st.button("View Meal History", width='stretch'):
             st.switch_page("pages/Meal_History.py")
 
     with c3:
-        if st.button("View Progress", use_container_width=True):
+        if st.button("View Progress", width='stretch'):
             st.switch_page("pages/Progress.py")
-        if st.button("View Goal History", use_container_width=True):
+        if st.button("View Goal History", width='stretch'):
             st.switch_page("pages/Goal_History.py")
 
     with c4:
-        if st.button("View Calculations", use_container_width=True):
+        if st.button("View Calculations", width='stretch'):
             st.switch_page("pages/Calculations.py")
-        if st.button("Indian Food Info", use_container_width=True):
+        if st.button("Indian Food Info", width='stretch'):
             st.switch_page("pages/Food_Info.py")
 
 

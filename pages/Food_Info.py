@@ -1,24 +1,42 @@
 import streamlit as st
 import json
+from utils.custom_css import load_css
+from utils.ui_helper import render_sidebar_info
+
+st.set_page_config(page_title="Food Info", layout="wide")
+load_css()
+
+render_sidebar_info(
+    title="Food Info",
+    text_lines=["A simple lookup tool for the calories and macros of common food items."]
+)
 
 def load_food_data():
-    with open('data/indian_food.json', "r") as file:
+    with open('data/food_db.json', "r") as file:
         return json.load(file)
     
 
 food_data = load_food_data()
 
-st.title("Indian Food Nutrition Info")
-st.write("Select a food to view its nutritional info")
+food_name_map = {item["item"].capitalize(): item["item"] for item in food_data}
+food_names_display = list(food_name_map.keys())
 
-food_names = [item["item"] for item in food_data]
-selected_food = st.selectbox("Choose a food item:", food_names)
+st.title("Food Nutrition Info")
+st.write("Search for a food item or select from the list below to view its nutritional info")
 
-food = next((item for item in food_data if item["item"] == selected_food), None)
+selected_food_display = st.selectbox("Type or choose a food item:", food_names_display)
+original_food_name = food_name_map[selected_food_display]
+
+food = next((item for item in food_data if item["item"] == original_food_name), None)
+
 if food:
     st.subheader(f"Nutrition for: {food['item'].capitalize()}")
-    st.write(f"Calories: {food['calories']}")
-    st.write(f"Protein: {food['protein']}")
-    st.write(f"Carbs: {food['carbs']}")
-    st.write(f"Fats: {food['fat']}")
-    st.write(f"Portion: {food['portion']}")
+    with st.container(border=True):
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Calories", f"{food['calories']} kcal")
+            st.metric("Protein", f"{food['protein']} g")
+        with col2:
+            st.metric("Carbs", f"{food['carbs']} g")
+            st.metric("Fats", f"{food['fat']} g")
+        st.caption(f"Portion: {food['portion']}")

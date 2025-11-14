@@ -1,0 +1,1954 @@
+[
+  {
+    "item": "roti",
+    "calories": 71,
+    "protein": 2.7,
+    "carbs": 11.3,
+    "fat": 0.4,
+    "portion": "1 medium"
+  },
+  {
+    "item": "rice",
+    "calories": 206,
+    "protein": 4.3,
+    "carbs": 45.0,
+    "fat": 0.4,
+    "portion": "1 cup"
+  },
+  {
+    "item": "dal",
+    "calories": 104,
+    "protein": 6.6,
+    "carbs": 13.9,
+    "fat": 1.7,
+    "portion": "1 cup"
+  },
+  {
+    "item": "paneer",
+    "calories": 296,
+    "protein": 20.8,
+    "carbs": 6.1,
+    "fat": 22.0,
+    "portion": "100g"
+  },
+  {
+    "item": "poha",
+    "calories": 180,
+    "protein": 3.0,
+    "carbs": 26.0,
+    "fat": 5.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "idli",
+    "calories": 39,
+    "protein": 1.6,
+    "carbs": 7.4,
+    "fat": 0.2,
+    "portion": "1 idli"
+  },
+  {
+    "item": "dosa",
+    "calories": 133,
+    "protein": 2.7,
+    "carbs": 18.0,
+    "fat": 5.8,
+    "portion": "1 dosa"
+  },
+  {
+    "item": "sambar",
+    "calories": 105,
+    "protein": 5.4,
+    "carbs": 12.0,
+    "fat": 4.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "upma",
+    "calories": 190,
+    "protein": 3.4,
+    "carbs": 30.0,
+    "fat": 7.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "aloo paratha",
+    "calories": 240,
+    "protein": 6.0,
+    "carbs": 38.0,
+    "fat": 8.0,
+    "portion": "1 paratha"
+  },
+  {
+    "item": "rajma",
+    "calories": 230,
+    "protein": 8.7,
+    "carbs": 33.0,
+    "fat": 5.5,
+    "portion": "1 cup"
+  },
+  {
+    "item": "chole",
+    "calories": 280,
+    "protein": 10.0,
+    "carbs": 32.0,
+    "fat": 12.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "curd",
+    "calories": 98,
+    "protein": 3.9,
+    "carbs": 4.7,
+    "fat": 5.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "buttermilk",
+    "calories": 35,
+    "protein": 1.5,
+    "carbs": 4.0,
+    "fat": 1.0,
+    "portion": "1 glass"
+  },
+  {
+    "item": "vegetable pulao",
+    "calories": 210,
+    "protein": 4.0,
+    "carbs": 30.0,
+    "fat": 8.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "chicken curry",
+    "calories": 300,
+    "protein": 25.0,
+    "carbs": 6.0,
+    "fat": 20.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "egg curry",
+    "calories": 220,
+    "protein": 14.0,
+    "carbs": 6.0,
+    "fat": 15.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "boiled egg",
+    "calories": 78,
+    "protein": 6.3,
+    "carbs": 0.6,
+    "fat": 5.3,
+    "portion": "1 egg"
+  },
+  {
+    "item": "banana",
+    "calories": 105,
+    "protein": 1.3,
+    "carbs": 27.0,
+    "fat": 0.3,
+    "portion": "1 medium"
+  },
+  {
+    "item": "apple",
+    "calories": 95,
+    "protein": 0.5,
+    "carbs": 25.0,
+    "fat": 0.3,
+    "portion": "1 medium"
+  },
+  {
+    "item": "chapati (whole wheat)",
+    "calories": 80,
+    "protein": 3.1,
+    "carbs": 15.0,
+    "fat": 0.5,
+    "portion": "1 medium"
+  },
+  {
+    "item": "naan",
+    "calories": 262,
+    "protein": 7.6,
+    "carbs": 45.0,
+    "fat": 5.2,
+    "portion": "1 naan"
+  },
+  {
+    "item": "biryani (veg)",
+    "calories": 240,
+    "protein": 5.0,
+    "carbs": 38.0,
+    "fat": 8.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "biryani (chicken)",
+    "calories": 320,
+    "protein": 18.0,
+    "carbs": 38.0,
+    "fat": 12.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "khichdi",
+    "calories": 170,
+    "protein": 5.0,
+    "carbs": 28.0,
+    "fat": 4.5,
+    "portion": "1 cup"
+  },
+  {
+    "item": "palak paneer",
+    "calories": 260,
+    "protein": 14.0,
+    "carbs": 8.0,
+    "fat": 19.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "butter chicken",
+    "calories": 350,
+    "protein": 24.0,
+    "carbs": 8.0,
+    "fat": 25.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "tandoori chicken",
+    "calories": 220,
+    "protein": 28.0,
+    "carbs": 4.0,
+    "fat": 10.0,
+    "portion": "1 serving (150g)"
+  },
+  {
+    "item": "masala dosa",
+    "calories": 220,
+    "protein": 5.0,
+    "carbs": 30.0,
+    "fat": 9.0,
+    "portion": "1 dosa"
+  },
+  {
+    "item": "vada",
+    "calories": 150,
+    "protein": 3.5,
+    "carbs": 16.0,
+    "fat": 8.0,
+    "portion": "2 pieces"
+  },
+  {
+    "item": "puri",
+    "calories": 112,
+    "protein": 2.3,
+    "carbs": 13.5,
+    "fat": 5.8,
+    "portion": "1 puri"
+  },
+  {
+    "item": "pakora",
+    "calories": 180,
+    "protein": 4.0,
+    "carbs": 18.0,
+    "fat": 10.0,
+    "portion": "100g"
+  },
+  {
+    "item": "samosa",
+    "calories": 252,
+    "protein": 4.5,
+    "carbs": 30.0,
+    "fat": 13.0,
+    "portion": "1 samosa"
+  },
+  {
+    "item": "aloo gobi",
+    "calories": 150,
+    "protein": 3.0,
+    "carbs": 18.0,
+    "fat": 7.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "baingan bharta",
+    "calories": 140,
+    "protein": 2.5,
+    "carbs": 12.0,
+    "fat": 9.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "raita",
+    "calories": 60,
+    "protein": 2.5,
+    "carbs": 5.0,
+    "fat": 3.0,
+    "portion": "1/2 cup"
+  },
+  {
+    "item": "lassi (sweet)",
+    "calories": 150,
+    "protein": 4.0,
+    "carbs": 24.0,
+    "fat": 4.0,
+    "portion": "1 glass"
+  },
+  {
+    "item": "lassi (plain)",
+    "calories": 80,
+    "protein": 4.0,
+    "carbs": 8.0,
+    "fat": 3.0,
+    "portion": "1 glass"
+  },
+  {
+    "item": "milk (whole)",
+    "calories": 149,
+    "protein": 7.7,
+    "carbs": 11.7,
+    "fat": 8.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "milk (low-fat)",
+    "calories": 102,
+    "protein": 8.2,
+    "carbs": 12.2,
+    "fat": 2.4,
+    "portion": "1 cup"
+  },
+  {
+    "item": "ghee",
+    "calories": 112,
+    "protein": 0.0,
+    "carbs": 0.0,
+    "fat": 12.7,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "chicken breast (grilled)",
+    "calories": 165,
+    "protein": 31.0,
+    "carbs": 0.0,
+    "fat": 3.6,
+    "portion": "100g"
+  },
+  {
+    "item": "chicken thigh (grilled)",
+    "calories": 209,
+    "protein": 26.0,
+    "carbs": 0.0,
+    "fat": 10.9,
+    "portion": "100g"
+  },
+  {
+    "item": "fish curry",
+    "calories": 180,
+    "protein": 20.0,
+    "carbs": 5.0,
+    "fat": 9.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "fish (grilled)",
+    "calories": 140,
+    "protein": 25.0,
+    "carbs": 0.0,
+    "fat": 4.0,
+    "portion": "100g"
+  },
+  {
+    "item": "prawns curry",
+    "calories": 160,
+    "protein": 18.0,
+    "carbs": 6.0,
+    "fat": 7.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "mutton curry",
+    "calories": 310,
+    "protein": 25.0,
+    "carbs": 5.0,
+    "fat": 21.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "oats",
+    "calories": 150,
+    "protein": 5.0,
+    "carbs": 27.0,
+    "fat": 3.0,
+    "portion": "1/2 cup dry"
+  },
+  {
+    "item": "cornflakes",
+    "calories": 101,
+    "protein": 1.8,
+    "carbs": 24.0,
+    "fat": 0.1,
+    "portion": "1 cup"
+  },
+  {
+    "item": "bread (white)",
+    "calories": 79,
+    "protein": 2.7,
+    "carbs": 14.9,
+    "fat": 0.9,
+    "portion": "1 slice"
+  },
+  {
+    "item": "bread (whole wheat)",
+    "calories": 81,
+    "protein": 3.6,
+    "carbs": 13.8,
+    "fat": 1.1,
+    "portion": "1 slice"
+  },
+  {
+    "item": "brown bread",
+    "calories": 69,
+    "protein": 3.5,
+    "carbs": 11.6,
+    "fat": 0.9,
+    "portion": "1 slice"
+  },
+  {
+    "item": "pasta (cooked)",
+    "calories": 131,
+    "protein": 5.0,
+    "carbs": 25.0,
+    "fat": 1.1,
+    "portion": "1 cup"
+  },
+  {
+    "item": "spaghetti (cooked)",
+    "calories": 158,
+    "protein": 5.8,
+    "carbs": 30.6,
+    "fat": 0.9,
+    "portion": "1 cup"
+  },
+  {
+    "item": "quinoa (cooked)",
+    "calories": 222,
+    "protein": 8.1,
+    "carbs": 39.4,
+    "fat": 3.6,
+    "portion": "1 cup"
+  },
+  {
+    "item": "couscous (cooked)",
+    "calories": 176,
+    "protein": 6.0,
+    "carbs": 36.5,
+    "fat": 0.3,
+    "portion": "1 cup"
+  },
+  {
+    "item": "sweet potato",
+    "calories": 112,
+    "protein": 2.1,
+    "carbs": 26.2,
+    "fat": 0.1,
+    "portion": "1 medium"
+  },
+  {
+    "item": "potato (baked)",
+    "calories": 161,
+    "protein": 4.3,
+    "carbs": 36.6,
+    "fat": 0.2,
+    "portion": "1 medium"
+  },
+  {
+    "item": "broccoli",
+    "calories": 55,
+    "protein": 3.7,
+    "carbs": 11.2,
+    "fat": 0.6,
+    "portion": "1 cup"
+  },
+  {
+    "item": "spinach",
+    "calories": 7,
+    "protein": 0.9,
+    "carbs": 1.1,
+    "fat": 0.1,
+    "portion": "1 cup raw"
+  },
+  {
+    "item": "carrot",
+    "calories": 25,
+    "protein": 0.6,
+    "carbs": 6.0,
+    "fat": 0.1,
+    "portion": "1 medium"
+  },
+  {
+    "item": "tomato",
+    "calories": 22,
+    "protein": 1.1,
+    "carbs": 4.8,
+    "fat": 0.2,
+    "portion": "1 medium"
+  },
+  {
+    "item": "cucumber",
+    "calories": 16,
+    "protein": 0.7,
+    "carbs": 3.6,
+    "fat": 0.1,
+    "portion": "1 cup"
+  },
+  {
+    "item": "bell pepper",
+    "calories": 31,
+    "protein": 1.0,
+    "carbs": 7.0,
+    "fat": 0.3,
+    "portion": "1 medium"
+  },
+  {
+    "item": "onion",
+    "calories": 44,
+    "protein": 1.2,
+    "carbs": 10.3,
+    "fat": 0.1,
+    "portion": "1 medium"
+  },
+  {
+    "item": "green beans",
+    "calories": 31,
+    "protein": 1.8,
+    "carbs": 7.0,
+    "fat": 0.1,
+    "portion": "1 cup"
+  },
+  {
+    "item": "cauliflower",
+    "calories": 25,
+    "protein": 2.0,
+    "carbs": 5.0,
+    "fat": 0.1,
+    "portion": "1 cup"
+  },
+  {
+    "item": "mushrooms",
+    "calories": 15,
+    "protein": 2.2,
+    "carbs": 2.3,
+    "fat": 0.2,
+    "portion": "1 cup"
+  },
+  {
+    "item": "orange",
+    "calories": 62,
+    "protein": 1.2,
+    "carbs": 15.4,
+    "fat": 0.2,
+    "portion": "1 medium"
+  },
+  {
+    "item": "mango",
+    "calories": 99,
+    "protein": 1.4,
+    "carbs": 24.7,
+    "fat": 0.6,
+    "portion": "1 cup"
+  },
+  {
+    "item": "grapes",
+    "calories": 104,
+    "protein": 1.1,
+    "carbs": 27.3,
+    "fat": 0.2,
+    "portion": "1 cup"
+  },
+  {
+    "item": "watermelon",
+    "calories": 46,
+    "protein": 0.9,
+    "carbs": 11.5,
+    "fat": 0.2,
+    "portion": "1 cup"
+  },
+  {
+    "item": "papaya",
+    "calories": 62,
+    "protein": 0.7,
+    "carbs": 15.7,
+    "fat": 0.4,
+    "portion": "1 cup"
+  },
+  {
+    "item": "pineapple",
+    "calories": 82,
+    "protein": 0.9,
+    "carbs": 21.6,
+    "fat": 0.2,
+    "portion": "1 cup"
+  },
+  {
+    "item": "strawberries",
+    "calories": 49,
+    "protein": 1.0,
+    "carbs": 11.7,
+    "fat": 0.5,
+    "portion": "1 cup"
+  },
+  {
+    "item": "blueberries",
+    "calories": 84,
+    "protein": 1.1,
+    "carbs": 21.4,
+    "fat": 0.5,
+    "portion": "1 cup"
+  },
+  {
+    "item": "almonds",
+    "calories": 164,
+    "protein": 6.0,
+    "carbs": 6.1,
+    "fat": 14.2,
+    "portion": "1 oz (23 nuts)"
+  },
+  {
+    "item": "cashews",
+    "calories": 157,
+    "protein": 5.2,
+    "carbs": 8.6,
+    "fat": 12.4,
+    "portion": "1 oz (18 nuts)"
+  },
+  {
+    "item": "walnuts",
+    "calories": 185,
+    "protein": 4.3,
+    "carbs": 3.9,
+    "fat": 18.5,
+    "portion": "1 oz (14 halves)"
+  },
+  {
+    "item": "peanuts",
+    "calories": 161,
+    "protein": 7.3,
+    "carbs": 4.6,
+    "fat": 14.0,
+    "portion": "1 oz"
+  },
+  {
+    "item": "peanut butter",
+    "calories": 96,
+    "protein": 3.6,
+    "carbs": 3.6,
+    "fat": 8.2,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "chickpeas (cooked)",
+    "calories": 269,
+    "protein": 14.5,
+    "carbs": 45.0,
+    "fat": 4.2,
+    "portion": "1 cup"
+  },
+  {
+    "item": "black beans (cooked)",
+    "calories": 227,
+    "protein": 15.2,
+    "carbs": 40.8,
+    "fat": 0.9,
+    "portion": "1 cup"
+  },
+  {
+    "item": "lentils (cooked)",
+    "calories": 230,
+    "protein": 17.9,
+    "carbs": 39.9,
+    "fat": 0.8,
+    "portion": "1 cup"
+  },
+  {
+    "item": "tofu",
+    "calories": 94,
+    "protein": 10.0,
+    "carbs": 2.3,
+    "fat": 6.0,
+    "portion": "100g"
+  },
+  {
+    "item": "greek yogurt (plain)",
+    "calories": 100,
+    "protein": 17.0,
+    "carbs": 6.0,
+    "fat": 0.7,
+    "portion": "3/4 cup"
+  },
+  {
+    "item": "cottage cheese",
+    "calories": 163,
+    "protein": 28.0,
+    "carbs": 6.2,
+    "fat": 2.3,
+    "portion": "1 cup"
+  },
+  {
+    "item": "cheese (cheddar)",
+    "calories": 113,
+    "protein": 7.0,
+    "carbs": 0.4,
+    "fat": 9.3,
+    "portion": "1 oz"
+  },
+  {
+    "item": "mozzarella",
+    "calories": 85,
+    "protein": 6.3,
+    "carbs": 0.6,
+    "fat": 6.3,
+    "portion": "1 oz"
+  },
+  {
+    "item": "butter",
+    "calories": 102,
+    "protein": 0.1,
+    "carbs": 0.0,
+    "fat": 11.5,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "olive oil",
+    "calories": 119,
+    "protein": 0.0,
+    "carbs": 0.0,
+    "fat": 13.5,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "coconut oil",
+    "calories": 121,
+    "protein": 0.0,
+    "carbs": 0.0,
+    "fat": 13.5,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "avocado",
+    "calories": 234,
+    "protein": 2.9,
+    "carbs": 12.5,
+    "fat": 21.4,
+    "portion": "1 medium"
+  },
+  {
+    "item": "hummus",
+    "calories": 166,
+    "protein": 7.9,
+    "carbs": 14.3,
+    "fat": 9.6,
+    "portion": "1/4 cup"
+  },
+  {
+    "item": "pizza (cheese)",
+    "calories": 285,
+    "protein": 12.2,
+    "carbs": 35.6,
+    "fat": 10.4,
+    "portion": "1 slice"
+  },
+  {
+    "item": "burger (beef)",
+    "calories": 354,
+    "protein": 20.0,
+    "carbs": 30.0,
+    "fat": 17.0,
+    "portion": "1 burger"
+  },
+  {
+    "item": "french fries",
+    "calories": 365,
+    "protein": 3.4,
+    "carbs": 48.0,
+    "fat": 17.0,
+    "portion": "1 medium"
+  },
+  {
+    "item": "sandwich (veg)",
+    "calories": 280,
+    "protein": 10.0,
+    "carbs": 42.0,
+    "fat": 8.0,
+    "portion": "1 sandwich"
+  },
+  {
+    "item": "wrap (chicken)",
+    "calories": 350,
+    "protein": 22.0,
+    "carbs": 38.0,
+    "fat": 12.0,
+    "portion": "1 wrap"
+  },
+  {
+    "item": "salad (mixed greens)",
+    "calories": 33,
+    "protein": 2.4,
+    "carbs": 6.3,
+    "fat": 0.3,
+    "portion": "2 cups"
+  },
+  {
+    "item": "caesar salad",
+    "calories": 184,
+    "protein": 10.0,
+    "carbs": 8.0,
+    "fat": 13.0,
+    "portion": "1 serving"
+  },
+  {
+    "item": "soup (tomato)",
+    "calories": 74,
+    "protein": 2.0,
+    "carbs": 16.0,
+    "fat": 0.7,
+    "portion": "1 cup"
+  },
+  {
+    "item": "soup (chicken)",
+    "calories": 86,
+    "protein": 6.0,
+    "carbs": 8.6,
+    "fat": 2.9,
+    "portion": "1 cup"
+  },
+  {
+    "item": "fried rice",
+    "calories": 228,
+    "protein": 5.4,
+    "carbs": 32.0,
+    "fat": 9.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "noodles (cooked)",
+    "calories": 220,
+    "protein": 7.3,
+    "carbs": 40.3,
+    "fat": 3.3,
+    "portion": "1 cup"
+  },
+  {
+    "item": "hakka noodles",
+    "calories": 270,
+    "protein": 8.0,
+    "carbs": 38.0,
+    "fat": 10.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "manchurian",
+    "calories": 240,
+    "protein": 6.0,
+    "carbs": 30.0,
+    "fat": 11.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "spring roll",
+    "calories": 140,
+    "protein": 3.5,
+    "carbs": 18.0,
+    "fat": 6.0,
+    "portion": "1 roll"
+  },
+  {
+    "item": "momos (steamed)",
+    "calories": 180,
+    "protein": 7.0,
+    "carbs": 28.0,
+    "fat": 4.0,
+    "portion": "5 pieces"
+  },
+  {
+    "item": "momos (fried)",
+    "calories": 280,
+    "protein": 8.0,
+    "carbs": 30.0,
+    "fat": 14.0,
+    "portion": "5 pieces"
+  },
+  {
+    "item": "chocolate bar",
+    "calories": 235,
+    "protein": 3.2,
+    "carbs": 26.0,
+    "fat": 13.0,
+    "portion": "1 bar (43g)"
+  },
+  {
+    "item": "ice cream",
+    "calories": 137,
+    "protein": 2.3,
+    "carbs": 15.6,
+    "fat": 7.3,
+    "portion": "1/2 cup"
+  },
+  {
+    "item": "gulab jamun",
+    "calories": 175,
+    "protein": 3.0,
+    "carbs": 28.0,
+    "fat": 6.0,
+    "portion": "1 piece"
+  },
+  {
+    "item": "jalebi",
+    "calories": 150,
+    "protein": 1.5,
+    "carbs": 28.0,
+    "fat": 4.0,
+    "portion": "1 piece"
+  },
+  {
+    "item": "ladoo",
+    "calories": 180,
+    "protein": 3.5,
+    "carbs": 25.0,
+    "fat": 7.5,
+    "portion": "1 piece"
+  },
+  {
+    "item": "barfi",
+    "calories": 150,
+    "protein": 4.0,
+    "carbs": 20.0,
+    "fat": 6.0,
+    "portion": "1 piece"
+  },
+  {
+    "item": "kheer",
+    "calories": 190,
+    "protein": 5.0,
+    "carbs": 28.0,
+    "fat": 6.5,
+    "portion": "1 cup"
+  },
+  {
+    "item": "coffee (black)",
+    "calories": 2,
+    "protein": 0.3,
+    "carbs": 0.0,
+    "fat": 0.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "tea (black)",
+    "calories": 2,
+    "protein": 0.0,
+    "carbs": 0.7,
+    "fat": 0.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "tea (with milk & sugar)",
+    "calories": 90,
+    "protein": 1.8,
+    "carbs": 16.0,
+    "fat": 1.5,
+    "portion": "1 cup"
+  },
+  {
+    "item": "green tea",
+    "calories": 2,
+    "protein": 0.2,
+    "carbs": 0.0,
+    "fat": 0.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "orange juice",
+    "calories": 112,
+    "protein": 1.7,
+    "carbs": 25.8,
+    "fat": 0.5,
+    "portion": "1 cup"
+  },
+  {
+    "item": "apple juice",
+    "calories": 114,
+    "protein": 0.1,
+    "carbs": 28.0,
+    "fat": 0.3,
+    "portion": "1 cup"
+  },
+  {
+    "item": "cola",
+    "calories": 140,
+    "protein": 0.0,
+    "carbs": 39.0,
+    "fat": 0.0,
+    "portion": "12 oz can"
+  },
+  {
+    "item": "protein shake",
+    "calories": 120,
+    "protein": 20.0,
+    "carbs": 3.0,
+    "fat": 2.5,
+    "portion": "1 scoop"
+  },
+  {
+    "item": "salmon (grilled)",
+    "calories": 206,
+    "protein": 22.0,
+    "carbs": 0.0,
+    "fat": 12.0,
+    "portion": "100g"
+  },
+  {
+    "item": "tuna (canned in water)",
+    "calories": 99,
+    "protein": 22.0,
+    "carbs": 0.0,
+    "fat": 0.7,
+    "portion": "100g"
+  },
+  {
+    "item": "shrimp (cooked)",
+    "calories": 99,
+    "protein": 24.0,
+    "carbs": 0.2,
+    "fat": 0.3,
+    "portion": "100g"
+  },
+  {
+    "item": "bacon",
+    "calories": 43,
+    "protein": 3.0,
+    "carbs": 0.1,
+    "fat": 3.3,
+    "portion": "1 slice"
+  },
+  {
+    "item": "sausage",
+    "calories": 301,
+    "protein": 12.0,
+    "carbs": 1.0,
+    "fat": 27.0,
+    "portion": "100g"
+  },
+  {
+    "item": "ham",
+    "calories": 145,
+    "protein": 21.0,
+    "carbs": 1.5,
+    "fat": 5.5,
+    "portion": "100g"
+  },
+  {
+    "item": "turkey breast",
+    "calories": 135,
+    "protein": 30.0,
+    "carbs": 0.0,
+    "fat": 0.7,
+    "portion": "100g"
+  },
+  {
+    "item": "beef steak",
+    "calories": 271,
+    "protein": 25.0,
+    "carbs": 0.0,
+    "fat": 19.0,
+    "portion": "100g"
+  },
+  {
+    "item": "ground beef (cooked)",
+    "calories": 250,
+    "protein": 26.0,
+    "carbs": 0.0,
+    "fat": 15.0,
+    "portion": "100g"
+  },
+  {
+    "item": "lamb chop",
+    "calories": 294,
+    "protein": 25.0,
+    "carbs": 0.0,
+    "fat": 21.0,
+    "portion": "100g"
+  },
+  {
+    "item": "pork chop",
+    "calories": 231,
+    "protein": 25.0,
+    "carbs": 0.0,
+    "fat": 14.0,
+    "portion": "100g"
+  },
+  {
+    "item": "duck",
+    "calories": 337,
+    "protein": 19.0,
+    "carbs": 0.0,
+    "fat": 28.0,
+    "portion": "100g"
+  },
+  {
+    "item": "scrambled eggs",
+    "calories": 149,
+    "protein": 10.0,
+    "carbs": 2.2,
+    "fat": 11.0,
+    "portion": "2 eggs"
+  },
+  {
+    "item": "omelet",
+    "calories": 154,
+    "protein": 10.6,
+    "carbs": 1.2,
+    "fat": 11.7,
+    "portion": "2 eggs"
+  },
+  {
+    "item": "egg white",
+    "calories": 17,
+    "protein": 3.6,
+    "carbs": 0.2,
+    "fat": 0.1,
+    "portion": "1 large"
+  },
+  {
+    "item": "bagel",
+    "calories": 289,
+    "protein": 11.0,
+    "carbs": 56.0,
+    "fat": 2.1,
+    "portion": "1 bagel"
+  },
+  {
+    "item": "croissant",
+    "calories": 231,
+    "protein": 4.7,
+    "carbs": 26.0,
+    "fat": 12.0,
+    "portion": "1 medium"
+  },
+  {
+    "item": "muffin (blueberry)",
+    "calories": 313,
+    "protein": 5.0,
+    "carbs": 54.0,
+    "fat": 9.0,
+    "portion": "1 muffin"
+  },
+  {
+    "item": "pancakes",
+    "calories": 227,
+    "protein": 6.0,
+    "carbs": 28.0,
+    "fat": 10.0,
+    "portion": "2 pancakes"
+  },
+  {
+    "item": "waffles",
+    "calories": 218,
+    "protein": 6.0,
+    "carbs": 25.0,
+    "fat": 11.0,
+    "portion": "1 waffle"
+  },
+  {
+    "item": "french toast",
+    "calories": 149,
+    "protein": 5.0,
+    "carbs": 16.0,
+    "fat": 7.0,
+    "portion": "1 slice"
+  },
+  {
+    "item": "granola",
+    "calories": 471,
+    "protein": 11.0,
+    "carbs": 64.0,
+    "fat": 20.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "cereal (sweetened)",
+    "calories": 147,
+    "protein": 2.0,
+    "carbs": 33.0,
+    "fat": 1.5,
+    "portion": "1 cup"
+  },
+  {
+    "item": "protein bar",
+    "calories": 200,
+    "protein": 20.0,
+    "carbs": 22.0,
+    "fat": 6.0,
+    "portion": "1 bar"
+  },
+  {
+    "item": "energy bar",
+    "calories": 230,
+    "protein": 9.0,
+    "carbs": 45.0,
+    "fat": 4.0,
+    "portion": "1 bar"
+  },
+  {
+    "item": "granola bar",
+    "calories": 120,
+    "protein": 2.0,
+    "carbs": 20.0,
+    "fat": 4.0,
+    "portion": "1 bar"
+  },
+  {
+    "item": "crackers (saltine)",
+    "calories": 62,
+    "protein": 1.3,
+    "carbs": 10.6,
+    "fat": 1.6,
+    "portion": "5 crackers"
+  },
+  {
+    "item": "pretzels",
+    "calories": 108,
+    "protein": 2.6,
+    "carbs": 22.5,
+    "fat": 0.8,
+    "portion": "1 oz"
+  },
+  {
+    "item": "popcorn (air-popped)",
+    "calories": 31,
+    "protein": 1.0,
+    "carbs": 6.2,
+    "fat": 0.4,
+    "portion": "1 cup"
+  },
+  {
+    "item": "popcorn (buttered)",
+    "calories": 91,
+    "protein": 1.4,
+    "carbs": 7.0,
+    "fat": 6.8,
+    "portion": "1 cup"
+  },
+  {
+    "item": "potato chips",
+    "calories": 152,
+    "protein": 2.0,
+    "carbs": 15.0,
+    "fat": 10.0,
+    "portion": "1 oz"
+  },
+  {
+    "item": "tortilla chips",
+    "calories": 142,
+    "protein": 2.2,
+    "carbs": 18.0,
+    "fat": 7.3,
+    "portion": "1 oz"
+  },
+  {
+    "item": "nachos with cheese",
+    "calories": 346,
+    "protein": 9.0,
+    "carbs": 36.0,
+    "fat": 19.0,
+    "portion": "1 serving"
+  },
+  {
+    "item": "tacos (beef)",
+    "calories": 226,
+    "protein": 9.4,
+    "carbs": 20.0,
+    "fat": 11.7,
+    "portion": "1 taco"
+  },
+  {
+    "item": "burrito (chicken)",
+    "calories": 450,
+    "protein": 23.0,
+    "carbs": 50.0,
+    "fat": 16.0,
+    "portion": "1 burrito"
+  },
+  {
+    "item": "quesadilla",
+    "calories": 529,
+    "protein": 27.0,
+    "carbs": 39.0,
+    "fat": 29.0,
+    "portion": "1 quesadilla"
+  },
+  {
+    "item": "enchiladas",
+    "calories": 323,
+    "protein": 12.0,
+    "carbs": 30.0,
+    "fat": 18.0,
+    "portion": "1 enchilada"
+  },
+  {
+    "item": "falafel",
+    "calories": 333,
+    "protein": 13.3,
+    "carbs": 31.8,
+    "fat": 17.8,
+    "portion": "100g"
+  },
+  {
+    "item": "shawarma",
+    "calories": 350,
+    "protein": 25.0,
+    "carbs": 28.0,
+    "fat": 15.0,
+    "portion": "1 wrap"
+  },
+  {
+    "item": "kebab",
+    "calories": 280,
+    "protein": 24.0,
+    "carbs": 8.0,
+    "fat": 17.0,
+    "portion": "1 serving"
+  },
+  {
+    "item": "gyro",
+    "calories": 593,
+    "protein": 29.0,
+    "carbs": 57.0,
+    "fat": 27.0,
+    "portion": "1 gyro"
+  },
+  {
+    "item": "sushi (salmon roll)",
+    "calories": 225,
+    "protein": 10.0,
+    "carbs": 37.0,
+    "fat": 3.5,
+    "portion": "6 pieces"
+  },
+  {
+    "item": "sushi (tuna roll)",
+    "calories": 184,
+    "protein": 14.0,
+    "carbs": 27.0,
+    "fat": 2.0,
+    "portion": "6 pieces"
+  },
+  {
+    "item": "sashimi",
+    "calories": 132,
+    "protein": 25.0,
+    "carbs": 0.0,
+    "fat": 3.0,
+    "portion": "100g"
+  },
+  {
+    "item": "ramen",
+    "calories": 436,
+    "protein": 19.0,
+    "carbs": 54.0,
+    "fat": 16.0,
+    "portion": "1 bowl"
+  },
+  {
+    "item": "pad thai",
+    "calories": 384,
+    "protein": 16.0,
+    "carbs": 48.0,
+    "fat": 14.0,
+    "portion": "1 serving"
+  },
+  {
+    "item": "pho",
+    "calories": 350,
+    "protein": 20.0,
+    "carbs": 50.0,
+    "fat": 6.0,
+    "portion": "1 bowl"
+  },
+  {
+    "item": "fried chicken",
+    "calories": 320,
+    "protein": 22.0,
+    "carbs": 16.0,
+    "fat": 18.0,
+    "portion": "1 piece"
+  },
+  {
+    "item": "chicken nuggets",
+    "calories": 280,
+    "protein": 15.0,
+    "carbs": 16.0,
+    "fat": 18.0,
+    "portion": "6 pieces"
+  },
+  {
+    "item": "chicken wings",
+    "calories": 203,
+    "protein": 16.0,
+    "carbs": 0.0,
+    "fat": 14.6,
+    "portion": "100g"
+  },
+  {
+    "item": "fish and chips",
+    "calories": 585,
+    "protein": 32.0,
+    "carbs": 48.0,
+    "fat": 28.0,
+    "portion": "1 serving"
+  },
+  {
+    "item": "hot dog",
+    "calories": 314,
+    "protein": 11.0,
+    "carbs": 24.0,
+    "fat": 18.0,
+    "portion": "1 hot dog"
+  },
+  {
+    "item": "mac and cheese",
+    "calories": 310,
+    "protein": 11.0,
+    "carbs": 40.0,
+    "fat": 11.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "lasagna",
+    "calories": 377,
+    "protein": 23.0,
+    "carbs": 34.0,
+    "fat": 16.0,
+    "portion": "1 piece"
+  },
+  {
+    "item": "ravioli",
+    "calories": 220,
+    "protein": 11.0,
+    "carbs": 32.0,
+    "fat": 5.5,
+    "portion": "1 cup"
+  },
+  {
+    "item": "spaghetti bolognese",
+    "calories": 288,
+    "protein": 16.0,
+    "carbs": 38.0,
+    "fat": 8.0,
+    "portion": "1 serving"
+  },
+  {
+    "item": "carbonara",
+    "calories": 390,
+    "protein": 18.0,
+    "carbs": 35.0,
+    "fat": 19.0,
+    "portion": "1 serving"
+  },
+  {
+    "item": "alfredo pasta",
+    "calories": 520,
+    "protein": 16.0,
+    "carbs": 47.0,
+    "fat": 29.0,
+    "portion": "1 serving"
+  },
+  {
+    "item": "risotto",
+    "calories": 200,
+    "protein": 4.5,
+    "carbs": 28.0,
+    "fat": 7.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "paella",
+    "calories": 350,
+    "protein": 20.0,
+    "carbs": 42.0,
+    "fat": 12.0,
+    "portion": "1 serving"
+  },
+  {
+    "item": "coleslaw",
+    "calories": 150,
+    "protein": 1.0,
+    "carbs": 13.0,
+    "fat": 11.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "potato salad",
+    "calories": 357,
+    "protein": 6.7,
+    "carbs": 28.0,
+    "fat": 24.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "baked beans",
+    "calories": 155,
+    "protein": 6.0,
+    "carbs": 29.0,
+    "fat": 0.5,
+    "portion": "1/2 cup"
+  },
+  {
+    "item": "corn on the cob",
+    "calories": 90,
+    "protein": 3.3,
+    "carbs": 19.0,
+    "fat": 1.4,
+    "portion": "1 ear"
+  },
+  {
+    "item": "mashed potatoes",
+    "calories": 237,
+    "protein": 4.0,
+    "carbs": 35.0,
+    "fat": 9.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "onion rings",
+    "calories": 276,
+    "protein": 3.7,
+    "carbs": 31.0,
+    "fat": 16.0,
+    "portion": "8-9 rings"
+  },
+  {
+    "item": "kiwi",
+    "calories": 61,
+    "protein": 1.1,
+    "carbs": 15.0,
+    "fat": 0.5,
+    "portion": "1 medium"
+  },
+  {
+    "item": "pear",
+    "calories": 101,
+    "protein": 0.6,
+    "carbs": 27.0,
+    "fat": 0.2,
+    "portion": "1 medium"
+  },
+  {
+    "item": "peach",
+    "calories": 59,
+    "protein": 1.4,
+    "carbs": 14.3,
+    "fat": 0.4,
+    "portion": "1 medium"
+  },
+  {
+    "item": "plum",
+    "calories": 30,
+    "protein": 0.5,
+    "carbs": 7.5,
+    "fat": 0.2,
+    "portion": "1 medium"
+  },
+  {
+    "item": "cherries",
+    "calories": 87,
+    "protein": 1.5,
+    "carbs": 22.0,
+    "fat": 0.3,
+    "portion": "1 cup"
+  },
+  {
+    "item": "pomegranate",
+    "calories": 234,
+    "protein": 4.7,
+    "carbs": 52.7,
+    "fat": 3.3,
+    "portion": "1 medium"
+  },
+  {
+    "item": "guava",
+    "calories": 37,
+    "protein": 1.4,
+    "carbs": 7.9,
+    "fat": 0.5,
+    "portion": "1 fruit"
+  },
+  {
+    "item": "lychee",
+    "calories": 66,
+    "protein": 0.8,
+    "carbs": 16.5,
+    "fat": 0.4,
+    "portion": "1 cup"
+  },
+  {
+    "item": "dates",
+    "calories": 66,
+    "protein": 0.4,
+    "carbs": 18.0,
+    "fat": 0.0,
+    "portion": "1 date"
+  },
+  {
+    "item": "raisins",
+    "calories": 129,
+    "protein": 1.4,
+    "carbs": 34.0,
+    "fat": 0.2,
+    "portion": "1/4 cup"
+  },
+  {
+    "item": "dried apricots",
+    "calories": 78,
+    "protein": 1.1,
+    "carbs": 20.0,
+    "fat": 0.2,
+    "portion": "1/4 cup"
+  },
+  {
+    "item": "pistachios",
+    "calories": 159,
+    "protein": 5.7,
+    "carbs": 7.7,
+    "fat": 12.9,
+    "portion": "1 oz (49 nuts)"
+  },
+  {
+    "item": "pecans",
+    "calories": 196,
+    "protein": 2.6,
+    "carbs": 3.9,
+    "fat": 20.4,
+    "portion": "1 oz (19 halves)"
+  },
+  {
+    "item": "hazelnuts",
+    "calories": 178,
+    "protein": 4.2,
+    "carbs": 4.7,
+    "fat": 17.2,
+    "portion": "1 oz (21 nuts)"
+  },
+  {
+    "item": "macadamia nuts",
+    "calories": 204,
+    "protein": 2.2,
+    "carbs": 3.9,
+    "fat": 21.5,
+    "portion": "1 oz (10-12 nuts)"
+  },
+  {
+    "item": "sunflower seeds",
+    "calories": 165,
+    "protein": 5.5,
+    "carbs": 6.8,
+    "fat": 14.0,
+    "portion": "1 oz"
+  },
+  {
+    "item": "pumpkin seeds",
+    "calories": 151,
+    "protein": 7.0,
+    "carbs": 5.0,
+    "fat": 13.0,
+    "portion": "1 oz"
+  },
+  {
+    "item": "chia seeds",
+    "calories": 138,
+    "protein": 4.7,
+    "carbs": 12.0,
+    "fat": 8.7,
+    "portion": "1 oz"
+  },
+  {
+    "item": "flax seeds",
+    "calories": 150,
+    "protein": 5.1,
+    "carbs": 8.1,
+    "fat": 12.0,
+    "portion": "1 oz"
+  },
+  {
+    "item": "coconut (fresh)",
+    "calories": 283,
+    "protein": 3.0,
+    "carbs": 12.0,
+    "fat": 27.0,
+    "portion": "1 cup shredded"
+  },
+  {
+    "item": "coconut milk",
+    "calories": 445,
+    "protein": 4.6,
+    "carbs": 6.4,
+    "fat": 48.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "almond milk",
+    "calories": 39,
+    "protein": 1.5,
+    "carbs": 1.5,
+    "fat": 2.9,
+    "portion": "1 cup"
+  },
+  {
+    "item": "soy milk",
+    "calories": 109,
+    "protein": 8.4,
+    "carbs": 8.9,
+    "fat": 4.5,
+    "portion": "1 cup"
+  },
+  {
+    "item": "oat milk",
+    "calories": 120,
+    "protein": 3.0,
+    "carbs": 16.0,
+    "fat": 5.0,
+    "portion": "1 cup"
+  },
+  {
+    "item": "honey",
+    "calories": 64,
+    "protein": 0.1,
+    "carbs": 17.3,
+    "fat": 0.0,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "maple syrup",
+    "calories": 52,
+    "protein": 0.0,
+    "carbs": 13.4,
+    "fat": 0.0,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "jam",
+    "calories": 56,
+    "protein": 0.1,
+    "carbs": 13.8,
+    "fat": 0.0,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "nutella",
+    "calories": 100,
+    "protein": 1.0,
+    "carbs": 11.0,
+    "fat": 6.0,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "mayonnaise",
+    "calories": 94,
+    "protein": 0.1,
+    "carbs": 0.1,
+    "fat": 10.3,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "ketchup",
+    "calories": 15,
+    "protein": 0.2,
+    "carbs": 4.1,
+    "fat": 0.0,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "mustard",
+    "calories": 10,
+    "protein": 0.6,
+    "carbs": 1.0,
+    "fat": 0.6,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "soy sauce",
+    "calories": 8,
+    "protein": 1.3,
+    "carbs": 0.8,
+    "fat": 0.0,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "ranch dressing",
+    "calories": 73,
+    "protein": 0.4,
+    "carbs": 1.4,
+    "fat": 7.7,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "balsamic vinegar",
+    "calories": 14,
+    "protein": 0.0,
+    "carbs": 2.7,
+    "fat": 0.0,
+    "portion": "1 tbsp"
+  },
+  {
+    "item": "hot sauce",
+    "calories": 1,
+    "protein": 0.1,
+    "carbs": 0.1,
+    "fat": 0.0,
+    "portion": "1 tsp"
+  },
+  {
+    "item": "brownie",
+    "calories": 227,
+    "protein": 3.0,
+    "carbs": 36.0,
+    "fat": 9.0,
+    "portion": "1 piece"
+  },
+  {
+    "item": "chocolate chip cookies",
+    "calories": 142,
+    "protein": 1.3,
+    "carbs": 18.0,
+    "fat": 7.3,
+    "portion": "2 cookies"
+  },
+  {
+    "item": "vanilla cake",
+    "calories": 270,
+    "protein": 3.0,
+    "carbs": 42.0,
+    "fat": 10.0,
+    "portion": "1 slice"
+  },
+  {
+    "item": "chocolate cake",
+    "calories": 352,
+    "protein": 5.0,
+    "carbs": 51.0,
+    "fat": 14.0,
+    "portion": "1 slice"
+  },
+  {
+    "item": "cheesecake",
+    "calories": 401,
+    "protein": 6.0,
+    "carbs": 32.0,
+    "fat": 28.0,
+    "portion": "1 slice"
+  },
+  {
+    "item": "tiramisu",
+    "calories": 240,
+    "protein": 4.5,
+    "carbs": 28.0,
+    "fat": 12.0,
+    "portion": "1 serving"
+  },
+  {
+    "item": "donut",
+    "calories": 269,
+    "protein": 3.4,
+    "carbs": 31.0,
+    "fat": 15.0,
+    "portion": "1 donut"
+  },
+  {
+    "item": "apple pie",
+    "calories": 296,
+    "protein": 2.4,
+    "carbs": 43.0,
+    "fat": 13.0,
+    "portion": "1 slice"
+  },
+  {
+    "item": "pumpkin pie",
+    "calories": 316,
+    "protein": 7.0,
+    "carbs": 41.0,
+    "fat": 14.0,
+    "portion": "1 slice"
+  },
+  {
+    "item": "pudding",
+    "calories": 130,
+    "protein": 2.5,
+    "carbs": 22.0,
+    "fat": 3.5,
+    "portion": "1/2 cup"
+  },
+  {
+    "item": "custard",
+    "calories": 122,
+    "protein": 4.3,
+    "carbs": 15.0,
+    "fat": 5.0,
+    "portion": "1/2 cup"
+  },
+  {
+    "item": "jello",
+    "calories": 80,
+    "protein": 2.0,
+    "carbs": 19.0,
+    "fat": 0.0,
+    "portion": "1/2 cup"
+  },
+  {
+    "item": "dark chocolate",
+    "calories": 170,
+    "protein": 2.0,
+    "carbs": 13.0,
+    "fat": 12.0,
+    "portion": "1 oz"
+  },
+  {
+    "item": "milk chocolate",
+    "calories": 150,
+    "protein": 2.0,
+    "carbs": 17.0,
+    "fat": 9.0,
+    "portion": "1 oz"
+  },
+  {
+    "item": "white chocolate",
+    "calories": 151,
+    "protein": 2.0,
+    "carbs": 17.0,
+    "fat": 9.0,
+    "portion": "1 oz"
+  },
+  {
+    "item": "candy (gummy bears)",
+    "calories": 140,
+    "protein": 2.0,
+    "carbs": 32.0,
+    "fat": 0.0,
+    "portion": "1 oz"
+  },
+  {
+    "item": "lollipop",
+    "calories": 60,
+    "protein": 0.0,
+    "carbs": 15.0,
+    "fat": 0.0,
+    "portion": "1 lollipop"
+  },
+  {
+    "item": "cotton candy",
+    "calories": 105,
+    "protein": 0.0,
+    "carbs": 28.0,
+    "fat": 0.0,
+    "portion": "1 oz"
+  }
+]
