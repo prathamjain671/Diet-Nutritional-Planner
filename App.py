@@ -4,7 +4,7 @@ from auth import login_user, register_user
 from utils.custom_css import load_css
 
 load_css()
-st.set_page_config(page_title="Digital Diet & Nutritional Planner", layout="centered")
+st.set_page_config(page_title="Diet & Nutritional Planner", layout="centered")
 
 st.markdown(
     """
