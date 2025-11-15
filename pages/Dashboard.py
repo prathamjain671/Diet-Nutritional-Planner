@@ -96,7 +96,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     with st.container(border=True, height=442):
-        st.subheader("💡Key Metrics")
+        st.subheader(":material/home: Key Metrics")
         c1, c2 = st.columns(2)
         with c1:
             st.metric(label="Your Target Calories", value=f"{target_cals:.2f} kcal")
