@@ -53,6 +53,12 @@ else:
 
     st.markdown("<style>[data-testid='stSidebar'] { display: none; }</style>", unsafe_allow_html=True)
 
+    st.info("Please complete your profile to access the app.")
+    if st.button("Log Out"):
+        for key in st.session_state.keys():
+            del st.session_state[key]
+        st.rerun()
+
     temp_user = User(name=user_name_from_auth, email=user_email, age=0, gender="", height=0, weight=0, goal="", diet_preference="", activity_level="")
 
     default_name = user_name_from_auth

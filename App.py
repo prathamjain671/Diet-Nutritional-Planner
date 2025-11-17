@@ -43,11 +43,13 @@ if st.session_state.user is None:
                 user = login_user(username, password)
 
                 if user:
-                    st.success(f"Welcome back, {user[1]}")
+                    with st.container():
+                        st.success(f"Welcome back, {user[1]}")
                     st.session_state.user = user
                     st.rerun()    
                 else:
-                    st.error("Invalid Credentials!")
+                    with st.container():
+                        st.error("Invalid Credentials!")
 
         with col2:
             if st.button("Don't have an account? Sign up", width='stretch'):
@@ -67,16 +69,19 @@ if st.session_state.user is None:
         with col1:
             if st.button("Register", width='stretch', type="primary"):
                 if password != confirm_password:
-                    st.error("Passwords do not match!")
+                    with st.container():
+                        st.error("Passwords do not match!")
                 else:
                     success, message = register_user(username, email, password)
 
                     if success:
-                        st.success(message)
+                        with st.container():
+                            st.success(message)
                         st.session_state.user = (email, username)
                         st.rerun()  
                     else:
-                        st.error(message)
+                        with st.container():
+                            st.error(message)
         with col2:
             if st.button("Have an account? Log in", width='stretch'):
                 st.session_state.page_choice = "Login"
