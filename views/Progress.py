@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 from utils.db import create_connection
 from datetime import datetime
 from zoneinfo import ZoneInfo
