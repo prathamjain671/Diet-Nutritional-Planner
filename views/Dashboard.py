@@ -7,7 +7,7 @@ from utils.user import User
 import altair as alt
 import time
 from utils.custom_css import load_css
-from utils.ui_helper import render_sidebar_info
+from utils.ui_helper import render_sidebar_info, render_footer
 
 load_css()
 render_sidebar_info(
@@ -49,9 +49,14 @@ cursor.execute('SELECT water_intake FROM calculations WHERE user_id = ? ORDER BY
 water_data = cursor.fetchone()
 water_goal = water_data[0]
 
+cursor.execute("SELECT meal_plan, plan_type FROM meal_plans WHERE user_id = ? AND DATE(timestamp) = DATE('now', 'localtime') ORDER BY timestamp DESC LIMIT 1", (user_id,))
+meal_plan_today = cursor.fetchone()
+
+cursor.execute("SELECT timestamp, weight FROM user_progress WHERE user_id = ? ORDER BY timestamp ASC", (user_id,))
+progress_data = cursor.fetchall()
+
 cursor.execute("SELECT weight FROM user_progress WHERE user_id = ? ORDER BY timestamp DESC LIMIT 2", (user_id,))
 weight_data = cursor.fetchall()
-
 current_weight = 0
 weight_delta = None
 if weight_data:
@@ -61,29 +66,39 @@ if weight_data:
         delta = round(current_weight - previous_weight, 2)
         weight_delta = f"{delta:.2f} kg"
 
-cursor.execute("SELECT meal_plan, plan_type FROM meal_plans WHERE user_id = ? AND DATE(timestamp) = DATE('now', 'localtime') ORDER BY timestamp DESC LIMIT 1", (user_id,))
-meal_plan_today = cursor.fetchone()
+start_weight = None
+goal_data = None
 
-cursor.execute("SELECT timestamp, weight FROM user_progress WHERE user_id = ? ORDER BY timestamp ASC", (user_id,))
-progress_data = cursor.fetchall()
+cursor.execute("SELECT target_weight, goal_type, timestamp FROM goals WHERE user_id = ? ORDER BY timestamp DESC LIMIT 1", (user_id,))
+goal_data_raw = cursor.fetchone()
 
-cursor.execute("SELECT target_weight, goal_type FROM goals WHERE user_id = ? ORDER BY timestamp DESC LIMIT 1", (user_id,))
-goal_data = cursor.fetchone()
+if goal_data_raw:
+    target_weight, goal_type, goal_timestamp = goal_data_raw
 
-cursor.execute("SELECT weight FROM user_progress WHERE user_id = ? ORDER BY timestamp ASC LIMIT 1", (user_id,))
-start_weight_data = cursor.fetchone()
+    cursor.execute("SELECT weight FROM user_progress WHERE user_id = ? AND timestamp <= ? ORDER BY timestamp DESC LIMIT 1", (user_id, goal_timestamp))
+    start_weight_raw = cursor.fetchone()
+    if start_weight_raw:
+        start_weight = start_weight_raw[0]
+    else:
+        cursor.execute("SELECT weight FROM user_progress WHERE user_id = ? ORDER BY timestamp ASC LIMIT 1", (user_id,))
+        start_weight_raw = cursor.fetchone()
+        if start_weight_raw:
+            start_weight = start_weight_raw[0]
+    
+    if start_weight is not None:
+        goal_data = (target_weight, goal_type, start_weight)
 conn.close()
 
 hour = datetime.now().hour
 greeting = "Welcome Back"
 if hour < 12:
-    greeting = "Good Morning"
+    greeting = ":material/sunny: Good Morning"
 elif 12 <= hour < 18:
-    greeting = "Good Afternoon"
+    greeting = ":material/partly_cloudy_day: Good Afternoon"
 else:
-    greeting = "Good Evening"
+    greeting = ":material/moon_stars: Good Evening"
 
-st.title(f"{greeting}, {user_session[1]}!")
+st.title(f"{greeting}, {user_session[1]}")
 st.markdown("Here is your health snapshot for the day.")
 st.divider()
 
@@ -132,35 +147,34 @@ with st.container(border=True):
     
     if not goal_data:
         st.info("You haven't set a goal weight yet! Go to 'Set Weight Goal' to create one.")
-    elif not start_weight_data:
+    elif start_weight is None:
         st.info("Log your weight at least once (e.g., in 'Update Profile') to see your progress.")
     else:
-        target_weight, goal_type = goal_data
-        start_weight = start_weight_data[0]
+        target_weight, goal_type, start_weight_for_goal = goal_data
         progress_percent = 0
 
         if goal_type == "loss":
-            total_to_lose = start_weight - target_weight
-            current_lost = start_weight - current_weight
+            total_to_lose = start_weight_for_goal - target_weight
+            current_lost = start_weight_for_goal - current_weight
             
             if total_to_lose <= 0: 
                 progress_percent = 100 if current_lost >= 0 else 0
             else:
                 progress_percent = int((current_lost / total_to_lose) * 100)
             
-            st.write(f"**Goal:** Lose {total_to_lose:.2f} kg (from {start_weight:.2f} kg to {target_weight:.2f} kg)")
+            st.write(f"**Goal:** Lose {total_to_lose:.2f} kg (from {start_weight_for_goal:.2f} kg to {target_weight:.2f} kg)")
             st.write(f"**Current:** You have lost {current_lost:.2f} kg so far.")
 
         elif goal_type == 'gain':
-                total_to_gain = target_weight - start_weight
-                current_gained = current_weight - start_weight
+                total_to_gain = target_weight - start_weight_for_goal
+                current_gained = current_weight - start_weight_for_goal
                 
                 if total_to_gain <= 0:
                     progress_percent = 100 if current_gained >= 0 else 0
                 else:
                     progress_percent = int((current_gained / total_to_gain) * 100)
                 
-                st.write(f"**Goal:** Gain {total_to_gain:.2f} kg (from {start_weight:.2f} kg to {target_weight:.2f} kg)")
+                st.write(f"**Goal:** Gain {total_to_gain:.2f} kg (from {start_weight_for_goal:.2f} kg to {target_weight:.2f} kg)")
                 st.write(f"**Current:** You have gained {current_gained:.2f} kg so far.")
 
         if progress_percent < 0: progress_percent = 0
@@ -228,5 +242,5 @@ with st.container():
         if st.button("Indian Food Info", width='stretch'):
             st.switch_page("views/Food_Info.py")
 
-
+render_footer()
 

@@ -5,7 +5,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 import altair as alt
 from utils.custom_css import load_css
-from utils.ui_helper import render_sidebar_info
+from utils.ui_helper import render_sidebar_info, render_footer
 
 load_css()
 render_sidebar_info(
@@ -144,3 +144,5 @@ else:
                 ]
             ).interactive()
             st.altair_chart(bmi_chart)
+
+render_footer()

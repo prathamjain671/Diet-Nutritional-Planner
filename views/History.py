@@ -3,7 +3,7 @@ from utils.db import create_connection
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from utils.custom_css import load_css
-from utils.ui_helper import render_sidebar_info
+from utils.ui_helper import render_sidebar_info, render_footer
 
 load_css()
 render_sidebar_info(
@@ -94,3 +94,4 @@ with tab2:
             count += 1
 
 conn.close()
+render_footer()

@@ -3,7 +3,7 @@ from utils.db import create_connection
 from utils.calculations import weight_loss, weight_gain
 from utils.user import User
 from utils.custom_css import load_css
-from utils.ui_helper import render_sidebar_info
+from utils.ui_helper import render_sidebar_info, render_footer
 
 load_css()
 render_sidebar_info(
@@ -51,3 +51,5 @@ if st.button("Set Goal", width=100):
         st.warning(result)
     else:
         st.success(result)
+
+render_footer()

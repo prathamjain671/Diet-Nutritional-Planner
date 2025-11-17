@@ -6,7 +6,7 @@ import google.generativeai as genai
 from utils.user import User
 from openai import OpenAI
 from utils.custom_css import load_css
-from utils.ui_helper import render_sidebar_info
+from utils.ui_helper import render_sidebar_info, render_footer
 
 load_css()
 render_sidebar_info(
@@ -32,14 +32,16 @@ api_key_input = ""
 
 
 if st.session_state.provider == "Google Gemini":
-    api_key_input = st.text_input("Google AI API Key:", type="password", value=st.session_state.google_api_key, placeholder="Just Relax! We do not store your key.", help="Get your key from Google AI Studio. We do not store your key.")
+    api_key_input = st.text_input("Google AI API Key:", type="password", value=st.session_state.google_api_key, placeholder="Just Relax! We do not store your key.", 
+                                  help="Get your key from Google AI Studio. We do not store your API key. It is only used for your current session and is discarded when you close the browser tab or logout.")
     
     if api_key_input != st.session_state.google_api_key:
         st.session_state.google_api_key = api_key_input
         st.rerun()
 
 elif st.session_state.provider == "OpenAI ChatGPT":
-    api_key_input = st.text_input("OpenAI API Key:", type="password", value=st.session_state.google_api_key, placeholder="Just Relax! We do not store your key.", help="Get your API key from OpenAI Dev Studio. We do not store your key.")
+    api_key_input = st.text_input("OpenAI API Key:", type="password", value=st.session_state.google_api_key, placeholder="Just Relax! We do not store your key.", 
+                                  help="Get your API key from OpenAI Dev Studio. We do not store your API key. It is only used for your current session and is discarded when you close the browser tab or logout.")
 
     if api_key_input != st.session_state.openai_api_key:
         st.session_state.openai_api_key = api_key_input
@@ -130,6 +132,8 @@ if client:
 
         except Exception as e:
             st.error(f"An error occurred while generating the plan: {e}")
+
+render_footer()
 
 
         

@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from utils.custom_css import load_css
-from utils.ui_helper import render_sidebar_info
+from utils.ui_helper import render_sidebar_info, render_footer
 
 load_css()
 render_sidebar_info(
@@ -45,3 +45,5 @@ if selected_food_display:
             st.caption(f"Portion: {food_series['portion']}")
 else:
     st.info("No food item selected.")
+
+render_footer()

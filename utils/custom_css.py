@@ -6,7 +6,7 @@ def load_css():
     SIDEBAR_INFO_OUTER_TEXT = "#E5E6E6"   # Outer text
     SIDEBAR_INFO_INNER_BG = "#4A544C"     # Inner background
     SIDEBAR_INFO_INNER_TEXT = "#E5E6E6"   # Inner text
-    SIDEBAR_INFO_OUTER_BORDER = "#6B796E" # Outer border
+    SIDEBAR_INFO_OUTER_BORDER = "#95bc9aff" # Outer border
     
     custom_css = f"""
     <style>

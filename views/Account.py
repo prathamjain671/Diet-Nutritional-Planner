@@ -4,7 +4,7 @@ from utils.db import create_connection
 from auth import change_password, update_username
 import time
 from utils.custom_css import load_css
-from utils.ui_helper import render_sidebar_info
+from utils.ui_helper import render_sidebar_info, render_footer
 
 load_css()
 render_sidebar_info(
@@ -103,3 +103,5 @@ with col1:
 with col2:
     if st.button("Go to Dashboard",width='stretch'):
         st.switch_page("views/Dashboard.py")
+
+render_footer()

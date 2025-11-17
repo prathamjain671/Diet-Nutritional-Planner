@@ -42,3 +42,30 @@ def render_sidebar_info(icon_path, title, text_lines):
     """
     
     st.sidebar.markdown(info_box_html, unsafe_allow_html=True)
+
+
+def render_footer():
+    
+    st.divider()
+    st.markdown(
+        """
+        <div style="text-align: center; font-size: 0.9rem; color: #888; padding: 10px 0;">
+            Built with ❤️ by Pratham<br>
+            <a 
+                href="https://github.com/prathamjain671" 
+                target="_blank" 
+                style="color: #888; text-decoration: none;"
+            >
+                GitHub
+            </a> | 
+            <a 
+                href="https://linkedin.com/in/prathamjain671" 
+                target="_blank" 
+                style="color: #888; text-decoration: none;"
+            >
+                LinkedIn
+            </a>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )

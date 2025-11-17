@@ -4,7 +4,7 @@ from utils.calculations import find_tdee, find_bmi, water_intake, calculate_macr
 from utils.user import User
 import time
 from utils.custom_css import load_css
-from utils.ui_helper import render_sidebar_info
+from utils.ui_helper import render_sidebar_info, render_footer
 
 load_css()
 render_sidebar_info(
@@ -148,5 +148,7 @@ if submitted:
         st.success("Profile Updated Successfully!")
         time.sleep(1)
         st.rerun()
+
+render_footer()
     
     
