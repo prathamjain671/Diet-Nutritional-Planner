@@ -40,7 +40,7 @@ if st.session_state.provider == "Google Gemini":
         st.rerun()
 
 elif st.session_state.provider == "OpenAI ChatGPT":
-    api_key_input = st.text_input("OpenAI API Key:", type="password", value=st.session_state.google_api_key, placeholder="Just Relax! We do not store your key.", 
+    api_key_input = st.text_input("OpenAI API Key:", type="password", value=st.session_state.openai_api_key, placeholder="Just Relax! We do not store your key.", 
                                   help="Get your API key from OpenAI Dev Studio. We do not store your API key. It is only used for your current session and is discarded when you close the browser tab or logout.")
 
     if api_key_input != st.session_state.openai_api_key:
@@ -105,33 +105,33 @@ if client:
     prompt = base_prompt(plan_type, user_obj, target_calories, protein_goal, custom_note)
 
     if st.button("Generate Meal Plan"):
-        st.spinner(f"Generating your customized meal plan with {st.session_state.provider}...")
+        with st.spinner(f"Generating your customized meal plan with {st.session_state.provider}..."):
 
-        try:
-            meal_plan_markdown = ""
+            try:
+                meal_plan_markdown = ""
 
-            if st.session_state.provider == "Google Gemini":
-                response = client.models.generate_content(
-                    model='gemini-2.0-flash-001',contents=prompt
-                )
-                meal_plan_markdown = response.text
+                if st.session_state.provider == "Google Gemini":
+                    response = client.models.generate_content(
+                        model='gemini-2.0-flash-001',contents=prompt
+                    )
+                    meal_plan_markdown = response.text
 
-            elif st.session_state.provider == "OpenAI ChatGPT":
-                response = client.chat.completions.create(
-                    model="gpt-5",
-                    messages=[
-                        {"role": "system", "content": "You are a helpful nutritional planner."},
-                        {"role": "user", "content": prompt}
-                    ]
-                )
-                meal_plan_markdown = response.choices[0].message.content
+                elif st.session_state.provider == "OpenAI ChatGPT":
+                    response = client.chat.completions.create(
+                        model="gpt-5.1",
+                        messages=[
+                            {"role": "system", "content": "You are a helpful nutritional planner."},
+                            {"role": "user", "content": prompt}
+                        ]
+                    )
+                    meal_plan_markdown = response.choices[0].message.content
 
-            insert_meal_plan(user_obj.id, plan_type, custom_note, prompt, meal_plan_markdown)
-            st.success("Here is your meal plan:")
-            st.markdown(meal_plan_markdown) 
+                insert_meal_plan(user_obj.id, plan_type, custom_note, prompt, meal_plan_markdown)
+                st.success("Here is your meal plan:")
+                st.markdown(meal_plan_markdown) 
 
-        except Exception as e:
-            st.error(f"An error occurred while generating the plan: {e}")
+            except Exception as e:
+                st.error(f"An error occurred while generating the plan: {e}")
 
 render_footer()
 

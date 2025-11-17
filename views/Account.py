@@ -97,7 +97,7 @@ with col1:
     if st.button("Log Out", type="primary",width='stretch'):
         for key in st.session_state.keys():
             del st.session_state[key]
-
+        st.rerun()
         st.switch_page("App.py")
 
 with col2:

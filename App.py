@@ -2,7 +2,7 @@ import streamlit as st
 from utils.db import create_table, create_connection
 from auth import login_user, register_user
 from utils.custom_css import load_css
-
+import time
 
 st.set_page_config(page_title="Diet & Nutritional Planner", layout="wide")
 load_css()
@@ -43,12 +43,13 @@ if st.session_state.user is None:
                 user = login_user(username, password)
 
                 if user:
-                    with st.container():
+                    with st.container(width='stretch'):
                         st.success(f"Welcome back, {user[1]}")
                     st.session_state.user = user
+                    time.sleep(1)
                     st.rerun()    
                 else:
-                    with st.container():
+                    with st.container(width='stretch'):
                         st.error("Invalid Credentials!")
 
         with col2:
@@ -69,15 +70,16 @@ if st.session_state.user is None:
         with col1:
             if st.button("Register", width='stretch', type="primary"):
                 if password != confirm_password:
-                    with st.container():
+                    with st.container(width='stretch'):
                         st.error("Passwords do not match!")
                 else:
                     success, message = register_user(username, email, password)
 
                     if success:
-                        with st.container():
+                        with st.container(width='stretch'):
                             st.success(message)
                         st.session_state.user = (email, username)
+                        time.sleep(1)
                         st.rerun()  
                     else:
                         with st.container():
