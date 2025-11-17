@@ -5,18 +5,14 @@ from utils.user import User
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info
 
-st.set_page_config(page_title="Set Goal", layout="wide")
 load_css()
-
 render_sidebar_info(
+    icon_path="icons/flag.png",
     title="Set Goal",
     text_lines=["Define your next weight target and a timeframe to achieve it."]
 )
 
 user_session = st.session_state.get("user")
-if not user_session:
-    st.warning("Please login to view this page!")
-    st.stop()
 
 conn = create_connection()
 cursor = conn.cursor()
@@ -34,8 +30,7 @@ if not row:
 user = User(*row[1:])
 user.id = row[0]
 
-st.set_page_config(page_title="Set Goal", layout="centered")
-st.title("Set Your Weight Goal")
+st.title(":material/track_changes: Set Your Weight Goal")
 
 goal_type = st.radio("What is your goal?", ["Weight Loss", "Weight Gain"])
 
@@ -46,7 +41,7 @@ else:
 
 months = st.number_input("In how many months do you want to achieve this?", min_value=1, max_value=100)
 
-if st.button("Set Goal"):
+if st.button("Set Goal", width=100):
     if goal_type == "Weight Loss":
         result = weight_loss(user, amount_to_lose=amount, months=months)
     else:

@@ -6,19 +6,14 @@ import time
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info
 
-st.set_page_config(page_title="Account", layout="wide")
 load_css()
-
 render_sidebar_info(
+    icon_path="icons/account_circle.png",
     title="Account",
     text_lines=["Manage your account security, change your username or password, and log out."]
 )
 
 user_session = st.session_state.get("user")
-if not user_session:
-    st.error("Please login to view this page!")
-    st.stop()
-
 conn = create_connection()
 cursor = conn.cursor()
 user_email = user_session[0]
@@ -31,27 +26,27 @@ conn.close()
 user = User(*user_data[1:])
 user.id = user_data[0]
 
-st.title(f"Account Settings: {user_name}")
+st.title(f":material/settings_account_box: Account Settings: {user_name}")
 
 with st.container(border=True):
-    st.subheader("Your Account Details")
+    st.subheader(":material/demography: Your Account Details")
     st.text_input("Username", value=user_name, disabled=True)
     st.text_input("Email", value=user.email, disabled=True)
     
-    st.subheader("Your Current Health Profile")
+    st.subheader(":material/clinical_notes: Your Current Health Profile")
     st.text_input("Current Goal", value=user.goal.title(), disabled=True)
-    st.text_input("Current Height", value=f"{user.height} cm", disabled=True)
-    st.text_input("Current Weight", value=f"{user.weight} kg", disabled=True)
+    st.text_input("Current Height", value=f"{user.height:.2f} cm", disabled=True)
+    st.text_input("Current Weight", value=f"{user.weight:.2f} kg", disabled=True)
 
     
     if st.button("Update Health Details (Go to Profile Update)"):
-        st.switch_page("pages/Profile_Update.py")
+        st.switch_page("views/Profile_Update.py")
 
 st.divider()
 
 with st.expander("Change Your Username"):
     with st.form("username_form"):
-        new_username = st.text_input("New username", value=user_name)
+        new_username = st.text_input("New Username", value=user_name)
         submitted_username = st.form_submit_button("Change Username")
 
         if submitted_username:
@@ -106,5 +101,5 @@ with col1:
         st.switch_page("App.py")
 
 with col2:
-    if st.button("Go to Dashboard",width='stretch',type="primary"):
-        st.switch_page("pages/Dashboard.py")
+    if st.button("Go to Dashboard",width='stretch'):
+        st.switch_page("views/Dashboard.py")

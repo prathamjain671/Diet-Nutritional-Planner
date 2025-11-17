@@ -5,25 +5,20 @@ from datetime import datetime
 from utils.calculations import log_weight
 from utils.user import User
 import altair as alt
+import time
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info
-import time
 
-st.set_page_config(page_title="Dashboard", layout="wide")
 load_css()
-
 render_sidebar_info(
+    icon_path="icons/dashboard.png",
     title="Dashboard",
     text_lines=[
         "Welcome to the dashboard!",
-        "Here you can view you key metrics, log your weight, navigate to other features and so much more!   "
-    ]
+        "Here you can view you key metrics, log your weight, navigate to other features and so much more!"]
 )
 
 user_session = st.session_state.get("user")
-if not user_session:
-    st.error("Please log in first!")
-    st.stop()
 
 conn = create_connection()
 cursor = conn.cursor()
@@ -96,10 +91,10 @@ col1, col2 = st.columns(2)
 
 with col1:
     with st.container(border=True, height=442):
-        st.subheader(":material/home: Key Metrics")
+        st.subheader(":material/analytics: Key Metrics")
         c1, c2 = st.columns(2)
         with c1:
-            st.metric(label="Your Target Calories", value=f"{target_cals:.2f} kcal")
+            st.metric(label="Your Target Calories", value=f"{int(target_cals)} kcal")
             st.metric(label="Current Weight", value=f"{current_weight:.2f} kg", delta=weight_delta, delta_color="inverse")
             st.metric(label="Daily Water Intake", value=f"{water_goal:.2f} L")
         with c2:
@@ -111,7 +106,7 @@ with col1:
 
 with col2:
     with st.container(border=True, height=442):
-        st.subheader("⚖️Your Weight Progress")
+        st.subheader(":material/monitor_weight: Your Weight Progress")
         if not progress_data:
             st.info("No weight data to show yet. Update your profile to start tracking!")
         else:
@@ -120,20 +115,20 @@ with col2:
             df["Day"] = df["Date"].dt.date
             df_plot = df.groupby("Date")["Weight (kg)"].last().reset_index()
 
-            chart = alt.Chart(df_plot).mark_line(point=True).encode(
+            chart = alt.Chart(df_plot).mark_line(point=True, color="#85BF8A").encode(
                 x=alt.X('Date', type='temporal', title='Date', axis=alt.Axis(format="%d-%b")),
                 y=alt.Y('Weight (kg)', title='Weight (kg)'),
 
                 tooltip=[alt.Tooltip('Date', format="%Y-%m-%d", title="Date"), 
                             alt.Tooltip('Date', format="%H:%M:%S", title="Time"), 'Weight (kg)']
             ).interactive()
-
+            
             st.altair_chart(chart)
 
 st.divider()
 
 with st.container(border=True):
-    st.subheader("🏃🏻Progress to Your Goal")
+    st.subheader(":material/sprint: Progress to Your Goal")
     
     if not goal_data:
         st.info("You haven't set a goal weight yet! Go to 'Set Weight Goal' to create one.")
@@ -153,8 +148,8 @@ with st.container(border=True):
             else:
                 progress_percent = int((current_lost / total_to_lose) * 100)
             
-            st.write(f"**Goal:** Lose {total_to_lose:.1f} kg (from {start_weight} kg to {target_weight} kg)")
-            st.write(f"**Current:** You have lost {current_lost:.1f} kg so far.")
+            st.write(f"**Goal:** Lose {total_to_lose:.2f} kg (from {start_weight:.2f} kg to {target_weight:.2f} kg)")
+            st.write(f"**Current:** You have lost {current_lost:.2f} kg so far.")
 
         elif goal_type == 'gain':
                 total_to_gain = target_weight - start_weight
@@ -165,8 +160,8 @@ with st.container(border=True):
                 else:
                     progress_percent = int((current_gained / total_to_gain) * 100)
                 
-                st.write(f"**Goal:** Gain {total_to_gain:.1f} kg (from {start_weight} kg to {target_weight} kg)")
-                st.write(f"**Current:** You have gained {current_gained:.1f} kg so far.")
+                st.write(f"**Goal:** Gain {total_to_gain:.2f} kg (from {start_weight:.2f} kg to {target_weight:.2f} kg)")
+                st.write(f"**Current:** You have gained {current_gained:.2f} kg so far.")
 
         if progress_percent < 0: progress_percent = 0
         if progress_percent > 100: progress_percent = 100
@@ -178,7 +173,7 @@ st.divider()
 col1, col2 = st.columns(2)
 with col1:
     with st.container(border=True, height=228):
-        st.subheader("🍽️Today's Meal Plan")
+        st.subheader(":material/hand_meal: Today's Meal Plan")
         if meal_plan_today:
             plan_text, plan_type = meal_plan_today
             with st.expander(f"View Your {plan_type} Plan"):
@@ -186,7 +181,7 @@ with col1:
         else:
             st.info("You haven't generated a meal plan today.")
             if st.button("Generate Your Plan Now!"):
-                st.switch_page("pages/Meal_Planner.py")
+                st.switch_page("views/Meal_Planner.py")
 
 with col2:
     with st.expander("Quick Log Today's Weight", expanded=True):
@@ -206,32 +201,32 @@ with col2:
 st.divider() 
 
 with st.container():
-    st.subheader("Manage Your Health")
+    st.subheader(":material/self_improvement: Manage Your Health")
     c1, c2, c3, c4 = st.columns(4)
     
     with c1:
         if st.button("Update Profile", width='stretch'):
-            st.switch_page("pages/Profile_Update.py")
+            st.switch_page("views/Profile_Update.py")
         if st.button("Set Weight Goal", width='stretch'):
-            st.switch_page("pages/Set_Goal.py")
+            st.switch_page("views/Set_Goal.py")
             
     with c2:
         if st.button("Generate New Meal Plan", width='stretch'):
-            st.switch_page("pages/Meal_Planner.py")
+            st.switch_page("views/Meal_Planner.py")
         if st.button("View Meal History", width='stretch'):
-            st.switch_page("pages/Meal_History.py")
+            st.switch_page("views/Meal_History.py")
 
     with c3:
         if st.button("View Progress", width='stretch'):
-            st.switch_page("pages/Progress.py")
+            st.switch_page("views/Progress.py")
         if st.button("View Goal History", width='stretch'):
-            st.switch_page("pages/Goal_History.py")
+            st.switch_page("views/Goal_History.py")
 
     with c4:
         if st.button("View Calculations", width='stretch'):
-            st.switch_page("pages/Calculations.py")
+            st.switch_page("views/Calculations.py")
         if st.button("Indian Food Info", width='stretch'):
-            st.switch_page("pages/Food_Info.py")
+            st.switch_page("views/Food_Info.py")
 
 
 

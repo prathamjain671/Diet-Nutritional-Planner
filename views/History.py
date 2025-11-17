@@ -5,22 +5,16 @@ from zoneinfo import ZoneInfo
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info
 
-st.set_page_config(page_title="History", layout="wide")
 load_css()
-
 render_sidebar_info(
+    icon_path="icons/history.png",
     title="History",
-    text_lines=[
-        "Review your past meal plans and weight goals. This is your complete history."
-    ]
+    text_lines=["Review your past meal plans and weight goals. This is your complete history."]
 )
 
 user_session = st.session_state.get("user")
-if not user_session:
-    st.error("Please login to view this page!")
-    st.stop()
 
-st.title("Your History")
+st.title(":material/history: Your History")
 
 conn = create_connection()
 cursor = conn.cursor()
@@ -91,7 +85,7 @@ with tab2:
             time = ist.strftime("%d %b %Y, %I:%M %p")
 
             with st.expander(f"{count}. [{time}] • {goal_type.capitalize()} Goal"):
-                st.markdown(f"- Target Weight: {target_weight} kg")
+                st.markdown(f"- Target Weight: {target_weight:.2f} kg")
                 st.markdown(f"- Time Frame: {months} months")
                 st.markdown(f"- Daily Calorie {'Deficit' if goal_type == 'loss' else 'Surplus'}: {int(change)} kcal")
                 st.markdown(f"- Target Calories: {int(target_calories)} kcal/day")

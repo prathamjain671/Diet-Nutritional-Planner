@@ -1,7 +1,5 @@
 from utils.db import create_connection
 import bcrypt
-import sqlite3
-
 
 def hash_password(password):
     password_bytes = password.encode('utf-8')

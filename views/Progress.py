@@ -4,24 +4,20 @@ import matplotlib.pyplot as plt
 from utils.db import create_connection
 from datetime import datetime
 from zoneinfo import ZoneInfo
+import altair as alt
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info
-import altair as alt
 
-st.set_page_config(page_title="Progress", layout="wide")
 load_css()
-
 render_sidebar_info(
+    icon_path="icons/chart_data.png",
     title="Progress",
     text_lines=["See detailed charts of your weight, BMI, and TDEE over time."]
 )
 
 user_session = st.session_state.get("user")
-if not user_session:
-    st.error("Please login to view this page!")
-    st.stop()
 
-st.title("Your Progress")
+st.title(":material/steps: Your Progress")
 
 conn = create_connection()
 cursor = conn.cursor()
@@ -58,32 +54,44 @@ calc = cursor.fetchall()
 
 conn.close()
 
+with st.container(border=True):
+    if not progress:
+        st.info("No progress data found!")
+    else:
+        st.subheader("Profile History")
+        df_progress = pd.DataFrame(progress, columns=["Weight (kg)", "Height (cm)", "Age", "Goal", "Diet", "Activity", "Date"])
+        df_progress["Date"] = pd.to_datetime(df_progress["Date"])
+        df_progress["Date"] = df_progress["Date"].dt.tz_localize("UTC").dt.tz_convert("Asia/Kolkata")
+        df_progress["Date"] = df_progress["Date"].dt.strftime("%d %b %Y, %I:%M %p")
+        st.dataframe(
+            df_progress.style.format({
+                "Weight (kg)": "{:.2f}",
+                "Height (cm)": "{:.2f}"
+            }),
+            width='stretch'
+        )
 
-if not progress:
-    st.info("No progress data found!")
-else:
-    st.subheader("Profile History")
-    df_progress = pd.DataFrame(progress, columns=["Weight (kg)", "Height (cm)", "Age", "Goal", "Diet", "Activity", "Date"])
-    df_progress["Date"] = pd.to_datetime(df_progress["Date"])
-    df_progress["Date"] = df_progress["Date"].dt.tz_localize("UTC").dt.tz_convert("Asia/Kolkata")
-    df_progress["Date"] = df_progress["Date"].dt.strftime("%d %b %Y, %I:%M %p")
-    st.dataframe(df_progress, width='stretch')
-
-if not calc:
-    st.info("No calculations data found!")
-else:
-    st.subheader("Calculation History")
-    df_calc = pd.DataFrame(calc, columns=["TDEE", "BMI", "BMI Category", "Date"])
-    df_calc["Date"] = pd.to_datetime(df_calc["Date"])
-    df_calc["Date"] = df_calc["Date"].dt.tz_localize("UTC").dt.tz_convert("Asia/Kolkata")
-    df_calc["Date"] = df_calc["Date"].dt.strftime("%d %b %Y, %I:%M %p")
-    st.dataframe(df_calc, width='stretch')
+    if not calc:
+        st.info("No calculations data found!")
+    else:
+        st.subheader("Calculation History")
+        df_calc = pd.DataFrame(calc, columns=["TDEE", "BMI", "BMI Category", "Date"])
+        df_calc["Date"] = pd.to_datetime(df_calc["Date"])
+        df_calc["Date"] = df_calc["Date"].dt.tz_localize("UTC").dt.tz_convert("Asia/Kolkata")
+        df_calc["Date"] = df_calc["Date"].dt.strftime("%d %b %Y, %I:%M %p")
+        st.dataframe(
+            df_calc.style.format({
+                "TDEE": "{:.2f}",
+                "BMI": "{:.2f}"
+            }),
+            width='stretch'
+        )
 
 if not progress or not calc:
     st.warning("Not enough data for visualization!")
 else:
     with st.container(border=True):
-        st.subheader("Visualize Your Progress")
+        st.subheader(":material/bar_chart_4_bars: Visualize Your Progress")
 
         df_progress_raw = pd.DataFrame(progress, columns=["Weight (kg)", "Height (cm)", "Age", "Goal", "Diet", "Activity", "Date"])
         df_progress_raw["Date"] = pd.to_datetime(df_progress_raw["Date"])
@@ -105,7 +113,7 @@ else:
                 tooltip=[
                     alt.Tooltip('Date', format="%Y-%m-%d", title="Date"),
                     alt.Tooltip('Date', format="%I:%M %p", title="Time"),
-                    'Weight (kg)'
+                    alt.Tooltip('Weight (kg):Q', format='.2f', title='Weight (kg)')
                 ]
             ).interactive()
             st.altair_chart(weight_chart)
@@ -119,7 +127,7 @@ else:
                 tooltip=[
                     alt.Tooltip('Date', format="%Y-%m-%d", title="Date"),
                     alt.Tooltip('Date', format="%I:%M %p", title="Time"),
-                    'TDEE'
+                    alt.Tooltip('TDEE:Q', format='.2f', title='TDEE')
                 ]
             ).interactive()
             st.altair_chart(tdee_chart)
@@ -133,7 +141,7 @@ else:
                 tooltip=[
                     alt.Tooltip('Date', format="%Y-%m-%d", title="Date"),
                     alt.Tooltip('Date', format="%I:%M %p", title="Time"),
-                    'BMI'
+                    alt.Tooltip('BMI:Q', format='.2f', title='BMI')
                 ]
             ).interactive()
             st.altair_chart(bmi_chart)

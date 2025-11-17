@@ -2,22 +2,18 @@ import streamlit as st
 from utils.db import create_connection, insert_user_progress, insert_calculations, insert_macros, update_user, insert_user
 from utils.calculations import find_tdee, find_bmi, water_intake, calculate_macros, protein_intake
 from utils.user import User
+import time
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info
-import time
 
-st.set_page_config(page_title="Profile Update", layout="wide")
 load_css()
-
 render_sidebar_info(
+    icon_path="icons/person_edit.png",
     title="Profile Update",
     text_lines=["Manage your health data like weight, height, activity level, and dietary preferences."]
 )
 
 user_session = st.session_state.get("user")
-if not user_session:
-    st.error("Please login to view this page!")
-    st.stop()
 
 user_email = user_session[0]
 user_name_from_auth = user_session[1]
@@ -29,7 +25,7 @@ data = cursor.fetchone()
 conn.close()
 
 if data:
-    st.title("Update Your Profile")
+    st.title(":material/demography: Update Your Profile")
 
     temp_user = User(*data[1:])
     temp_user.id = data[0]
@@ -53,7 +49,7 @@ if data:
     is_new_user = False
 
 else:
-    st.title("Complete Your Profile")
+    st.title(":material/demography: Complete Your Profile")
 
     st.markdown("<style>[data-testid='stSidebar'] { display: none; }</style>", unsafe_allow_html=True)
 
@@ -76,16 +72,16 @@ else:
 
 with st.form("Profile_Form"):
     with st.container(border=True):
-        st.subheader("Your Details")
+        st.subheader(":material/contact_page: Your Details")
         name = st.text_input("Name", value=default_name)
         age = st.number_input("Age", value=default_age, min_value=5, max_value=130)
         gender = st.selectbox("Gender", gender_options, index=default_gender_index)
     with st.container(border=True):
-        st.subheader("Health Metrics")
+        st.subheader(":material/health_metrics: Health Metrics")
         height = st.number_input("Height (cm)", value=default_height, min_value=10.0, max_value=300.0)
         weight = st.number_input("Weight (kg)", value=default_weight, min_value=10.0, max_value=300.0)
     with st.container(border=True):
-        st.subheader("Your Goals")
+        st.subheader(":material/target: Your Goals")
         goal = st.selectbox("Your Goal", goal_options, index=default_goal_index)
         diet_preference = st.selectbox("Dietary Preference", diet_options, index=default_diet_index)
 
@@ -147,7 +143,7 @@ if submitted:
 
     if is_new_user:
         st.success("Profile Setup Complete! Redirecting to Dashboard...")
-        st.switch_page("pages/Dashboard.py")
+        st.switch_page("views/Dashboard.py")
     else:
         st.success("Profile Updated Successfully!")
         time.sleep(1)

@@ -3,93 +3,119 @@ from utils.db import create_table, create_connection
 from auth import login_user, register_user
 from utils.custom_css import load_css
 
+
+st.set_page_config(page_title="Diet & Nutritional Planner", layout="wide")
 load_css()
-st.set_page_config(page_title="Diet & Nutritional Planner", layout="centered")
-
-st.markdown(
-    """
-    <style>
-        [data-testid="stSidebar"] {
-            display: none;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 create_table()
 
 if "user" not in st.session_state:
     st.session_state.user = None
 
-if "page_choice" not in st.session_state:
-    st.session_state.page_choice = "Login"
+if st.session_state.user is None:
 
-st.title("Digital Diet & Nutritional Planner")
+    st.markdown(
+        """
+        <style>
+            [data-testid="stSidebar"] {
+                display: none;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
-if st.session_state.page_choice == "Login":
-    st.subheader("Login to Your Account")
 
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
+    if "page_choice" not in st.session_state:
+        st.session_state.page_choice = "Login"
 
-    col1, col2 = st.columns(2)
+    st.title("Diet & Nutritional Planner")
 
-    with col1:
-        if st.button("Login", width='stretch', type="primary"):
-            user = login_user(username, password)
+    if st.session_state.page_choice == "Login":
+        st.subheader("Login to Your Account")
 
-            if user:
-                user_email = user[0]
-                user_name = user[1]
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
 
-                conn = create_connection()
-                cursor = conn.cursor()
-                cursor.execute("SELECT 1 FROM users WHERE email = ?", (user_email,))
-                profile_exists = cursor.fetchone()
+        col1, col2 = st.columns(2)
 
-                st.success(f"Welcome back, {user[1]}")
-                st.session_state.user = user
-                
-                if profile_exists:
-                    st.switch_page("pages/Dashboard.py")
+        with col1:
+            if st.button("Login", width='stretch', type="primary"):
+                user = login_user(username, password)
+
+                if user:
+                    st.success(f"Welcome back, {user[1]}")
+                    st.session_state.user = user
+                    st.rerun()    
                 else:
-                    st.session_state.new_email = user_email
-                    st.session_state.new_username = user_name
-                    st.switch_page("pages\Profile_Update.py")
-            else:
-                st.error("Invalid Credentials!")
+                    st.error("Invalid Credentials!")
 
-    with col2:
-        if st.button("Don't have an account? Sign up", width='stretch'):
-            st.session_state.page_choice = "Register"
-            st.rerun()
+        with col2:
+            if st.button("Don't have an account? Sign up", width='stretch'):
+                st.session_state.page_choice = "Register"
+                st.rerun()
 
-elif st.session_state.page_choice == "Register":
-    st.subheader("Create a New Account")
+    elif st.session_state.page_choice == "Register":
+        st.subheader("Create a New Account")
 
-    username = st.text_input("Username")
-    email = st.text_input("Email")
-    password = st.text_input("Password", type="password")
-    confirm_password  = st.text_input("Confirm Password", type="password")
+        username = st.text_input("Username")
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+        confirm_password  = st.text_input("Confirm Password", type="password")
 
-    col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2)
 
-    with col1:
-        if st.button("Register", width='stretch', type="primary"):
-            if password != confirm_password:
-                st.error("Passwords do not match!")
-            else:
-                success, message = register_user(username, email, password)
-
-                if success:
-                    st.success(message)
-                    st.session_state.user = (email, username)
-                    st.switch_page("pages\Profile_Update.py")
+        with col1:
+            if st.button("Register", width='stretch', type="primary"):
+                if password != confirm_password:
+                    st.error("Passwords do not match!")
                 else:
-                    st.error(message)
-    with col2:
-        if st.button("Have an account? Log in", width='stretch'):
-            st.session_state.page_choice = "Login"
-            st.rerun()
+                    success, message = register_user(username, email, password)
+
+                    if success:
+                        st.success(message)
+                        st.session_state.user = (email, username)
+                        st.rerun()  
+                    else:
+                        st.error(message)
+        with col2:
+            if st.button("Have an account? Log in", width='stretch'):
+                st.session_state.page_choice = "Login"
+                st.rerun()
         
+else:
+    conn = create_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT 1 FROM users WHERE email = ?",(st.session_state.user[0],))
+    profile_exists = cursor.fetchone() is not None
+    conn.close()
+
+    if not profile_exists:
+        st.markdown(
+        """
+        <style>
+            [data-testid="stSidebar"] {
+                display: none;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+        )
+        
+        with open("views/Profile_Update.py", "r") as f:
+            file_code = f.read()
+        exec(file_code, globals())
+
+    else:
+        pages = st.navigation([
+            st.Page("views/Dashboard.py", title="Dashboard", icon=":material/dashboard:"),
+            st.Page("views/Profile_Update.py", title="Update Profile", icon=":material/person_edit:"),
+            st.Page("views/Progress.py", title="Progress", icon=":material/chart_data:"),
+            st.Page("views/Meal_Planner.py", title="Meal Planner", icon=":material/menu_book_2:"),
+            st.Page("views/Set_Goal.py", title="Set Goal", icon=":material/flag:"),
+            st.Page("views/History.py", title="History", icon=":material/history:"),
+            st.Page("views/Calculations.py", title="Calculations", icon=":material/calculate:"),
+            st.Page("views/Food_Info.py", title="Food Info", icon=":material/search:"),
+            st.Page("views/Account.py", title="Account", icon=":material/account_circle:"),
+        ])
+
+        pages.run()

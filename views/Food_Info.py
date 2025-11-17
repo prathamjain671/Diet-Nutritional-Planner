@@ -3,10 +3,9 @@ import json
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info
 
-st.set_page_config(page_title="Food Info", layout="wide")
 load_css()
-
 render_sidebar_info(
+    icon_path="icons/search.png",
     title="Food Info",
     text_lines=["A simple lookup tool for the calories and macros of common food items."]
 )
@@ -21,7 +20,7 @@ food_data = load_food_data()
 food_name_map = {item["item"].capitalize(): item["item"] for item in food_data}
 food_names_display = list(food_name_map.keys())
 
-st.title("Food Nutrition Info")
+st.title(":material/dining: Food Nutrition Info")
 st.write("Search for a food item or select from the list below to view its nutritional info")
 
 selected_food_display = st.selectbox("Type or choose a food item:", food_names_display)

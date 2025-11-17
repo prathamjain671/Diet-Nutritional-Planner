@@ -8,13 +8,14 @@ from openai import OpenAI
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info
 
-st.set_page_config(page_title="Meal Planner", layout="wide")
 load_css()
-
 render_sidebar_info(
+    icon_path="icons/menu_book_2.png",
     title="Meal Planner",
     text_lines=["Generate a new, personalized meal plan tailored to your goals."]
 )
+
+user_session = st.session_state.get("user")
 
 if "provider" not in st.session_state:
     st.session_state.provider = "Google Gemini"
