@@ -35,13 +35,16 @@ if selected_food_display:
     if not food_series.empty:
         st.subheader(f"Nutrition for: {food_series['item'].capitalize()}")
         with st.container(border=True):
-            col1, col2 = st.columns(2)
+            col1, col2, col3 = st.columns(3)
             with col1:
                 st.metric("Calories", f"{food_series['calories']} kcal")
                 st.metric("Protein", f"{food_series['protein']} g")
             with col2:
                 st.metric("Carbs", f"{food_series['carbs']} g")
                 st.metric("Fats", f"{food_series['fat']} g")
+            with col3:
+                st.metric("Sugar", f"{food_series['sugar']} g")
+                st.metric("Sodium", f"{food_series['sodium']} mg")
             st.caption(f"Portion: {food_series['portion']}")
 else:
     st.info("No food item selected.")

@@ -97,7 +97,6 @@ with col1:
         for key in st.session_state.keys():
             del st.session_state[key]
         st.rerun()
-        st.switch_page("App.py")
 
 with col2:
     if st.button("Go to Dashboard",width='stretch'):

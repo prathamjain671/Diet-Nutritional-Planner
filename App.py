@@ -10,6 +10,8 @@ create_table()
 
 if "user" not in st.session_state:
     st.session_state.user = None
+if "profile_exists" not in st.session_state:
+    st.session_state.profile_exists = False
 
 if st.session_state.user is None:
 
@@ -46,6 +48,15 @@ if st.session_state.user is None:
                     with st.container(width='stretch'):
                         st.success(f"Welcome back, {user[1]}")
                     st.session_state.user = user
+
+                    conn = create_connection()
+                    with conn.session as s:
+                        profile_exists = s.execute(
+                            text("SELECT 1 FROM users WHERE email = :email"), 
+                            {"email": st.session_state.user[0]}
+                        ).fetchone() is not None
+                        st.session_state.profile_exists = profile_exists
+
                     st.rerun()    
                 else:
                     with st.container(width='stretch'):
@@ -78,6 +89,7 @@ if st.session_state.user is None:
                         with st.container(width='stretch'):
                             st.success(message)
                         st.session_state.user = (email, username)
+                        st.session_state.profile_exists = False
                         st.rerun()  
                     else:
                         with st.container():
@@ -95,7 +107,7 @@ else:
             {"email": st.session_state.user[0]}
         ).fetchone() is not None
 
-    if not profile_exists:
+    if not st.session_state.profile_exists:
         st.markdown(
         """
         <style>
@@ -110,6 +122,9 @@ else:
         with open("views/Profile_Update.py", "r") as f:
             file_code = f.read()
         exec(file_code, globals())
+
+        if st.session_state.profile_exists:
+            st.rerun()
 
     else:
         pages = st.navigation([

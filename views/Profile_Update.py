@@ -70,12 +70,6 @@ else:
     
     is_new_user = True
 
-    st.info("Please complete your profile to access the app.")
-    if st.button("Log Out"):
-        for key in st.session_state.keys():
-            del st.session_state[key]
-        st.rerun()
-
 
 with st.form("Profile_Form"):
     with st.container(border=True):
@@ -134,6 +128,7 @@ if submitted:
         user_id = insert_user(temp_user)
         temp_user.id = user_id
         st.session_state.user = (temp_user.email, temp_user.name)
+        st.session_state.profile_exists = True
     else:
         update_user(temp_user)
         st.session_state.user = (temp_user.email, temp_user.name)
@@ -150,9 +145,15 @@ if submitted:
 
     if is_new_user:
         st.success("Profile Setup Complete! Redirecting to Dashboard...")
-        st.switch_page("views/Dashboard.py")
     else:
         st.success("Profile Updated Successfully!")
+        st.rerun()
+
+if is_new_user:
+    st.info("Please complete your profile to access the app.")
+    if st.button("Log Out", key="logout_button_setup"): 
+        for key in st.session_state.keys():
+            del st.session_state[key]
         st.rerun()
 
 render_footer()
