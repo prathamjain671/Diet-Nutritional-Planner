@@ -2,7 +2,7 @@ import streamlit as st
 from utils.db import create_table, create_connection
 from auth import login_user, register_user
 from utils.custom_css import load_css
-import time
+from sqlalchemy import text
 
 st.set_page_config(page_title="Diet & Nutritional Planner", layout="wide")
 load_css()
@@ -46,7 +46,6 @@ if st.session_state.user is None:
                     with st.container(width='stretch'):
                         st.success(f"Welcome back, {user[1]}")
                     st.session_state.user = user
-                    time.sleep(1)
                     st.rerun()    
                 else:
                     with st.container(width='stretch'):
@@ -79,7 +78,6 @@ if st.session_state.user is None:
                         with st.container(width='stretch'):
                             st.success(message)
                         st.session_state.user = (email, username)
-                        time.sleep(1)
                         st.rerun()  
                     else:
                         with st.container():
@@ -91,10 +89,11 @@ if st.session_state.user is None:
         
 else:
     conn = create_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT 1 FROM users WHERE email = ?",(st.session_state.user[0],))
-    profile_exists = cursor.fetchone() is not None
-    conn.close()
+    with conn.session as s:
+        profile_exists = s.execute(
+            text("SELECT 1 FROM users WHERE email = :email"), 
+            {"email": st.session_state.user[0]}
+        ).fetchone() is not None
 
     if not profile_exists:
         st.markdown(

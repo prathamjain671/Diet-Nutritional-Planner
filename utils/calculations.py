@@ -1,5 +1,7 @@
+import streamlit as st
 from utils.db import insert_goal, create_connection, update_user, insert_user_progress, insert_calculations, insert_macros
 from utils.user import User
+from sqlalchemy import text
 
 def find_tdee(user):
     bmr = 0
@@ -23,7 +25,6 @@ def find_tdee(user):
     else:
         return None
     
-    # return f"Based on your details, your Total Daily Energy Expenditure (TDEE) is approximately: {tdee} calories/day."
     return tdee
 
 
@@ -42,7 +43,6 @@ def find_bmi(user):
     elif bmi > 40:
         bmi_category = "class 3 obesity"
 
-    # return f"Based on your details, your Body Mass Index (BMI) is {bmi} which falls under {bmi_category.capitalize()} category."
     return bmi,bmi_category
 
 
@@ -58,7 +58,6 @@ def protein_intake(user):
 
     protein = user.weight * factor
 
-    # return f"Based on your details, your daily protein intake should be {protein}g."
     return protein
 
 
@@ -143,11 +142,11 @@ def calculate_macros(user):
 
     target_calories =None
     conn = create_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT target_calories FROM goals WHERE user_id = ? ORDER BY timestamp DESC LIMIT 1", (user.id,))
-    goal_row = cursor.fetchone()
-    conn.close()
+    with conn.session as s:
+        goal_row = s.execute(
+            text("SELECT target_calories FROM goals WHERE user_id = :uid ORDER BY timestamp DESC LIMIT 1"),
+            {"uid": user.id}
+        ).fetchone()
 
     if goal_row and goal_row[0] is not None:
         target_calories = goal_row[0]

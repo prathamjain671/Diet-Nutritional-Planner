@@ -7,6 +7,7 @@ from utils.user import User
 from openai import OpenAI
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info, render_footer
+from sqlalchemy import text
 
 load_css()
 render_sidebar_info(
@@ -53,11 +54,14 @@ if not user_session:
     st.error("Please Login first to view this page!")
     st.stop()
 
+
 conn = create_connection()
-cursor = conn.cursor()
-cursor.execute("SELECT * FROM users WHERE email = ?", (user_session[0],))
-row = cursor.fetchone()
-conn.close()
+with conn.session as s:
+    row = s.execute(
+        text("SELECT * FROM users WHERE email = :email"), 
+        {"email": user_session[0]}
+    ).fetchone()
+
 if not row:
     st.error("User profile not found!")
     st.stop()   
@@ -126,12 +130,16 @@ if client:
                     )
                     meal_plan_markdown = response.choices[0].message.content
 
-                insert_meal_plan(user_obj.id, plan_type, custom_note, prompt, meal_plan_markdown)
-                st.success("Here is your meal plan:")
-                st.markdown(meal_plan_markdown) 
+                insert_meal_plan(user_obj.id, plan_type, custom_note, prompt, meal_plan_markdown) 
 
             except Exception as e:
                 st.error(f"An error occurred while generating the plan: {e}")
+                meal_plan_markdown = None
+
+        if meal_plan_markdown:
+            st.success("Here is your meal plan:")
+            with st.container(border=True):
+                st.markdown(meal_plan_markdown)
 
 render_footer()
 

@@ -5,9 +5,9 @@ from datetime import datetime
 from utils.calculations import log_weight
 from utils.user import User
 import altair as alt
-import time
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info, render_footer
+from sqlalchemy import text
 
 load_css()
 render_sidebar_info(
@@ -21,42 +21,89 @@ render_sidebar_info(
 user_session = st.session_state.get("user")
 
 conn = create_connection()
-cursor = conn.cursor()
-user_email = user_session[0]
-cursor.execute("SELECT * FROM users WHERE email = ?", (user_email,))
-user_row = cursor.fetchone()
+with conn.session as s:
+    user_email = user_session[0]
+    user_row = s.execute(
+        text("SELECT * FROM users WHERE email = :email"), 
+        {"email": user_email}
+    ).fetchone()
 
-if not user_row:
-    st.error("User profile not found! Please complete your profile.")
-    conn.close()
-    st.stop()
+    if not user_row:
+        st.error("User profile not found! Please complete your profile.")
+        st.stop()
 
-user_id = user_row[0]
-user = User(*user_row[1:])
-user.id = user_id
+    user_id = user_row[0]
+    user = User(*user_row[1:])
+    user.id = user_id
 
-cursor.execute("SELECT target_calories FROM macros WHERE user_id = ? ORDER BY timestamp DESC LIMIT 1", (user_id,))
-macro_data = cursor.fetchone()
-target_cals = macro_data[0] if macro_data else 0
+    macro_data = s.execute(
+        text("SELECT target_calories FROM macros WHERE user_id = :uid ORDER BY timestamp DESC LIMIT 1"),
+        {"uid": user_id}
+    ).fetchone()
+    target_cals = macro_data[0] if macro_data else 0
 
-cursor.execute("SELECT protein, carbs, fats FROM macros WHERE user_id = ? ORDER BY timestamp DESC LIMIT 1", (user_id,))
-macro_data = cursor.fetchone()
-protein_goal = macro_data[0] if macro_data else 0
-carbs_goal = macro_data[1] if macro_data else 0
-fats_goal = macro_data[2] if macro_data else 0
+    macro_data = s.execute(
+        text("SELECT protein, carbs, fats FROM macros WHERE user_id = :uid ORDER BY timestamp DESC LIMIT 1"),
+        {"uid": user_id}
+    ).fetchone()
+    protein_goal = macro_data[0] if macro_data else 0
+    carbs_goal = macro_data[1] if macro_data else 0
+    fats_goal = macro_data[2] if macro_data else 0
 
-cursor.execute('SELECT water_intake FROM calculations WHERE user_id = ? ORDER BY timestamp DESC LIMIT 1', (user_id,))
-water_data = cursor.fetchone()
-water_goal = water_data[0]
+    water_data = s.execute(
+        text('SELECT water_intake FROM calculations WHERE user_id = :uid ORDER BY timestamp DESC LIMIT 1'),
+        {"uid": user_id}
+    ).fetchone()
+    water_goal = water_data[0] if water_data else 0 # Added a check for None
 
-cursor.execute("SELECT meal_plan, plan_type FROM meal_plans WHERE user_id = ? AND DATE(timestamp) = DATE('now', 'localtime') ORDER BY timestamp DESC LIMIT 1", (user_id,))
-meal_plan_today = cursor.fetchone()
+    meal_plan_today = s.execute(
+            text("""
+                SELECT meal_plan, plan_type 
+                FROM meal_plans 
+                WHERE user_id = :uid AND CAST(timestamp AS DATE) = CURRENT_DATE 
+                ORDER BY timestamp DESC LIMIT 2
+            """), 
+            {"uid": user_id}
+        ).fetchone()
 
-cursor.execute("SELECT timestamp, weight FROM user_progress WHERE user_id = ? ORDER BY timestamp ASC", (user_id,))
-progress_data = cursor.fetchall()
+    progress_data = s.execute(
+        text("SELECT timestamp, weight FROM user_progress WHERE user_id = :uid ORDER BY timestamp ASC"),
+        {"uid": user_id}
+    ).fetchall()
 
-cursor.execute("SELECT weight FROM user_progress WHERE user_id = ? ORDER BY timestamp DESC LIMIT 2", (user_id,))
-weight_data = cursor.fetchall()
+    weight_data = s.execute(
+        text("SELECT weight FROM user_progress WHERE user_id = :uid ORDER BY timestamp DESC LIMIT 2"),
+        {"uid": user_id}
+    ).fetchall()
+    
+    start_weight = None
+    goal_data = None
+
+    goal_data_raw = s.execute(
+        text("SELECT target_weight, goal_type, timestamp FROM goals WHERE user_id = :uid ORDER BY timestamp DESC LIMIT 1"),
+        {"uid": user_id}
+    ).fetchone()
+
+    if goal_data_raw:
+        target_weight, goal_type, goal_timestamp = goal_data_raw
+        start_weight_raw = s.execute(
+            text("SELECT weight FROM user_progress WHERE user_id = :uid AND timestamp <= :ts ORDER BY timestamp DESC LIMIT 1"), 
+            {"uid": user_id, "ts": goal_timestamp}
+        ).fetchone()
+        
+        if start_weight_raw:
+            start_weight = start_weight_raw[0]
+        else:
+            start_weight_raw = s.execute(
+                text("SELECT weight FROM user_progress WHERE user_id = :uid ORDER BY timestamp ASC LIMIT 1"), 
+                {"uid": user_id}
+            ).fetchone()
+            if start_weight_raw:
+                start_weight = start_weight_raw[0]
+        
+        if start_weight is not None:
+            goal_data = (target_weight, goal_type, start_weight)
+
 current_weight = 0
 weight_delta = None
 if weight_data:
@@ -65,29 +112,6 @@ if weight_data:
         previous_weight = weight_data[1][0]
         delta = round(current_weight - previous_weight, 2)
         weight_delta = f"{delta:.2f} kg"
-
-start_weight = None
-goal_data = None
-
-cursor.execute("SELECT target_weight, goal_type, timestamp FROM goals WHERE user_id = ? ORDER BY timestamp DESC LIMIT 1", (user_id,))
-goal_data_raw = cursor.fetchone()
-
-if goal_data_raw:
-    target_weight, goal_type, goal_timestamp = goal_data_raw
-
-    cursor.execute("SELECT weight FROM user_progress WHERE user_id = ? AND timestamp <= ? ORDER BY timestamp DESC LIMIT 1", (user_id, goal_timestamp))
-    start_weight_raw = cursor.fetchone()
-    if start_weight_raw:
-        start_weight = start_weight_raw[0]
-    else:
-        cursor.execute("SELECT weight FROM user_progress WHERE user_id = ? ORDER BY timestamp ASC LIMIT 1", (user_id,))
-        start_weight_raw = cursor.fetchone()
-        if start_weight_raw:
-            start_weight = start_weight_raw[0]
-    
-    if start_weight is not None:
-        goal_data = (target_weight, goal_type, start_weight)
-conn.close()
 
 hour = datetime.now().hour
 greeting = "Welcome Back"
@@ -190,8 +214,16 @@ with col1:
         st.subheader(":material/hand_meal: Today's Meal Plan")
         if meal_plan_today:
             plan_text, plan_type = meal_plan_today
-            with st.expander(f"View Your {plan_type} Plan"):
+
+            @st.dialog(f"Your {plan_type} Meal Plan", width="large")
+            def show_meal_plan_dialog():
                 st.markdown(plan_text)
+            
+            if st.button(f"View Your Latest Meal Plan", width="stretch"):
+                show_meal_plan_dialog()
+
+            if st.button("Go to History"):
+                st.switch_page("views/History.py")
         else:
             st.info("You haven't generated a meal plan today.")
             if st.button("Generate Your Plan Now!"):
@@ -207,7 +239,6 @@ with col2:
                 success, message = log_weight(user, quick_weight)
                 if success:
                     st.success(message)
-                    time.sleep(1)
                     st.rerun()
                 else:
                     st.error(message)
@@ -228,13 +259,13 @@ with st.container():
         if st.button("Generate New Meal Plan", width='stretch'):
             st.switch_page("views/Meal_Planner.py")
         if st.button("View Meal History", width='stretch'):
-            st.switch_page("views/Meal_History.py")
+            st.switch_page("views/History.py")
 
     with c3:
         if st.button("View Progress", width='stretch'):
             st.switch_page("views/Progress.py")
         if st.button("View Goal History", width='stretch'):
-            st.switch_page("views/Goal_History.py")
+            st.switch_page("views/History.py")
 
     with c4:
         if st.button("View Calculations", width='stretch'):

@@ -4,6 +4,7 @@ from utils.calculations import weight_loss, weight_gain
 from utils.user import User
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info, render_footer
+from sqlalchemy import text
 
 load_css()
 render_sidebar_info(
@@ -15,13 +16,12 @@ render_sidebar_info(
 user_session = st.session_state.get("user")
 
 conn = create_connection()
-cursor = conn.cursor()
-
-user_email = user_session[0]
-
-cursor.execute("SELECT * FROM users WHERE email = ?", (user_email,))
-row = cursor.fetchone()
-conn.close()
+with conn.session as s:
+    user_email = user_session[0]
+    row = s.execute(
+        text("SELECT * FROM users WHERE email = :email"), 
+        {"email": user_email}
+    ).fetchone()
 
 if not row:
     st.error("User profile not found!")

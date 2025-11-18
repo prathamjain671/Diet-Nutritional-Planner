@@ -2,6 +2,7 @@ import streamlit as st
 import base64
 import pathlib
 
+@st.cache_data
 def image_to_base64(file_path: str):
     try:
         with open(file_path, "rb") as f:

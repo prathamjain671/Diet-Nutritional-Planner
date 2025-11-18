@@ -2,9 +2,9 @@ import streamlit as st
 from utils.user import User
 from utils.db import create_connection
 from auth import change_password, update_username
-import time
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info, render_footer
+from sqlalchemy import text
 
 load_css()
 render_sidebar_info(
@@ -14,14 +14,15 @@ render_sidebar_info(
 )
 
 user_session = st.session_state.get("user")
-conn = create_connection()
-cursor = conn.cursor()
-user_email = user_session[0]
-user_name = user_session[1]
 
-cursor.execute("SELECT * FROM users WHERE email = ?", (user_email,))
-user_data = cursor.fetchone()
-conn.close()
+conn = create_connection()
+with conn.session as s:
+    user_email = user_session[0]
+    user_name = user_session[1]
+    user_data = s.execute(
+        text("SELECT * FROM users WHERE email = :email"), 
+        {"email": user_email}
+    ).fetchone()
 
 user = User(*user_data[1:])
 user.id = user_data[0]
@@ -60,7 +61,6 @@ with st.expander("Change Your Username"):
                 if success:
                     st.session_state.user = (user_email, new_username)
                     st.success(message)
-                    time.sleep(1)
                     st.rerun()
                 else:
                     st.error(message)
@@ -85,7 +85,6 @@ with st.expander("Change Your Password"):
                 success, message = change_password(user_email, old_password=old_password, new_password=new_password)
                 if success:
                     st.success(message)
-                    time.sleep(1)
                     st.rerun()
                 else:
                     st.error(message)

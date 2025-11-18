@@ -1,9 +1,9 @@
 import streamlit as st
 from utils.db import create_connection
-from datetime import datetime
-from zoneinfo import ZoneInfo
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info, render_footer
+from sqlalchemy import text
+import pandas as pd
 
 load_css()
 render_sidebar_info(
@@ -16,63 +16,64 @@ user_session = st.session_state.get("user")
 
 st.title(":material/history: Your History")
 
+
 conn = create_connection()
-cursor = conn.cursor()
-user_email = user_session[0]
-cursor.execute("SELECT id FROM users WHERE email = ?", (user_email,))
-user_row = cursor.fetchone()
+with conn.session as s:
+    user_email = user_session[0]
+    user_row = s.execute(
+        text("SELECT id FROM users WHERE email = :email"), 
+        {"email": user_email}
+    ).fetchone()
 
-if not user_row:
-    st.error("User profile not found! Please complete profile setup.")
-    conn.close()
-    st.stop()
+    if not user_row:
+        st.error("User profile not found! Please complete profile setup.")
+        st.stop()
 
-user_id = user_row[0]
+    user_id = user_row[0]
 
-tab1, tab2 = st.tabs(["Meal Plan History", "Goal History"], width='stretch')
+    tab1, tab2 = st.tabs(["Meal Plan History", "Goal History"])
 
+    with tab1:
+        st.subheader("Your Saved Meal Plans")
+        
+        plans = s.execute(
+            text('''
+                SELECT plan_type, custom_note, meal_plan, timestamp
+                FROM meal_plans
+                WHERE user_id = :uid
+                ORDER BY timestamp DESC
+            '''), {"uid": user_id}
+        ).fetchall()
 
-with tab1:
-    st.subheader("Your Saved Meal Plans")
-    
-    cursor.execute('''
-            SELECT plan_type, custom_note, meal_plan, timestamp
-            FROM meal_plans
-            WHERE user_id = ?
-            ORDER BY timestamp DESC
-    ''', (user_id,))
+        if not plans:
+            st.info("You have no meal plans yet!")
+        else:
+            st.success(f"Showing {len(plans)} saved meal plans")
+            count = 1
+            for plan in plans:
+                plan_type, note, meal_plan, timestamp = plan
+                pd_timestamp = pd.to_datetime(timestamp)
+                ist = pd_timestamp.tz_convert("Asia/Kolkata")
+                time = ist.strftime("%d %b %Y, %I:%M %p")
 
-    plans = cursor.fetchall()
-
-    if not plans:
-        st.info("You have no meal plans yet!")
-    else:
-        st.success(f"Showing {len(plans)} saved meal plans")
-        count = 1
-        for plan in plans:
-            plan_type, note, meal_plan, timestamp = plan
-            utc = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
-            ist = utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(ZoneInfo("Asia/Kolkata"))
-            time = ist.strftime("%d %b %Y, %I:%M %p")
-
-            with st.expander(f"[{count}] {time} | Type: {plan_type.capitalize()}"):
-                if note and note.strip():
-                    st.markdown(f"Custom Note: {note}")
-                st.markdown("Full Meal Plan:")
-                st.markdown(meal_plan)
-            count += 1
+                with st.expander(f"[{count}] {time} | Type: {plan_type.capitalize()}"):
+                    if note and note.strip():
+                        st.markdown(f"Custom Note: {note}")
+                    st.markdown("Full Meal Plan:")
+                    st.markdown(meal_plan)
+                count += 1
 
 with tab2:
     st.subheader("Your Past Weight Goals")
 
-    cursor.execute('''
-            SELECT goal_type, target_weight, target_time_months, daily_calorie_change, target_calories, health_warning, timestamp
-            FROM goals
-            WHERE user_id = ?
-            ORDER BY timestamp DESC
-    ''', (user_id,))
-
-    rows = cursor.fetchall()
+    rows = s.execute(
+            text('''
+                SELECT goal_type, target_weight, target_time_months, daily_calorie_change, target_calories, health_warning, timestamp
+                FROM goals
+                WHERE user_id = :uid
+                ORDER BY timestamp DESC
+            '''), {"uid": user_id}
+        ).fetchall()
 
     if not rows:
         st.info("No past goal records!")
@@ -80,8 +81,8 @@ with tab2:
         count = 1
         for row in rows:
             goal_type, target_weight, months, change, target_calories, warning, timestamp = row
-            utc = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
-            ist = utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(ZoneInfo("Asia/Kolkata"))
+            pd_timestamp = pd.to_datetime(timestamp)
+            ist = pd_timestamp.tz_convert("Asia/Kolkata")
             time = ist.strftime("%d %b %Y, %I:%M %p")
 
             with st.expander(f"{count}. [{time}] • {goal_type.capitalize()} Goal"):
@@ -93,5 +94,4 @@ with tab2:
                     st.warning(warning)
             count += 1
 
-conn.close()
 render_footer()

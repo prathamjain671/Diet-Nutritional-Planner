@@ -2,9 +2,9 @@ import streamlit as st
 from utils.db import create_connection, insert_user_progress, insert_calculations, insert_macros, update_user, insert_user
 from utils.calculations import find_tdee, find_bmi, water_intake, calculate_macros, protein_intake
 from utils.user import User
-import time
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info, render_footer
+from sqlalchemy import text
 
 load_css()
 render_sidebar_info(
@@ -19,10 +19,11 @@ user_email = user_session[0]
 user_name_from_auth = user_session[1]
 
 conn = create_connection()  
-cursor = conn.cursor()
-cursor.execute("SELECT * FROM users WHERE email = ?", (user_email,))
-data = cursor.fetchone()
-conn.close()
+with conn.session as s:
+    data = s.execute(
+        text("SELECT * FROM users WHERE email = :email"), 
+        {"email": user_email}
+    ).fetchone()
 
 if data:
     st.title(":material/demography: Update Your Profile")
@@ -53,12 +54,6 @@ else:
 
     st.markdown("<style>[data-testid='stSidebar'] { display: none; }</style>", unsafe_allow_html=True)
 
-    st.info("Please complete your profile to access the app.")
-    if st.button("Log Out"):
-        for key in st.session_state.keys():
-            del st.session_state[key]
-        st.rerun()
-
     temp_user = User(name=user_name_from_auth, email=user_email, age=0, gender="", height=0, weight=0, goal="", diet_preference="", activity_level="")
 
     default_name = user_name_from_auth
@@ -74,6 +69,12 @@ else:
     diet_options = ["Vegetarian", "Non-Vegetarian", "Eggitarian"]
     
     is_new_user = True
+
+    st.info("Please complete your profile to access the app.")
+    if st.button("Log Out"):
+        for key in st.session_state.keys():
+            del st.session_state[key]
+        st.rerun()
 
 
 with st.form("Profile_Form"):
@@ -152,7 +153,6 @@ if submitted:
         st.switch_page("views/Dashboard.py")
     else:
         st.success("Profile Updated Successfully!")
-        time.sleep(1)
         st.rerun()
 
 render_footer()

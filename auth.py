@@ -1,5 +1,7 @@
+import streamlit as st
 from utils.db import create_connection
 import bcrypt
+from sqlalchemy import text
 
 def hash_password(password):
     password_bytes = password.encode('utf-8')
@@ -19,76 +21,77 @@ def verify_password(plain_password, hashed_password):
 
 def change_password(email, old_password, new_password):
     conn = create_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM auth WHERE email = ?", (email,))
-    user_auth_row = cursor.fetchone()
+    with conn.session as s:
+        user_auth_row = s.execute(
+            text("SELECT * FROM auth WHERE email = :email"), 
+            {"email": email}
+        ).fetchone()
 
-    if user_auth_row:
-        hashed_password_from_db = user_auth_row[3]
-
-        if verify_password(old_password, hashed_password_from_db):
-            new_hashed = hash_password(new_password)
-
-            cursor.execute("UPDATE auth SET password = ? WHERE email = ?", (new_hashed, email))
-            conn.commit()
-            conn.close()
-            return True, "Password Updated Successfully!"
+        if user_auth_row:
+            hashed_password_from_db = user_auth_row[3]
+            if verify_password(old_password, hashed_password_from_db):
+                new_hashed = hash_password(new_password)
+                s.execute(
+                    text("UPDATE auth SET password = :new_pass WHERE email = :email"), 
+                    {"new_pass": new_hashed, "email": email}
+                )
+                s.commit()
+                return True, "Password Updated Successfully!"
+            else:
+                return False, "Incorrect Old Password!"
         else:
-            conn.close()
-            return False, "Incorrect Old Password!"
-    else:
-        conn.close()
-        return False, "User not found!"
-
+            return False, "User not found!"
 
 def register_user(username, email, password):
     conn = create_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM auth WHERE username = ? OR email = ?", (username, email))
-    if cursor.fetchone():
-        return False, "Username or Email already exists!"
-    
-    hashed = hash_password(password)
-
-    cursor.execute("INSERT INTO auth (username, email, password) VALUES (?, ?, ?)", (username, email, hashed))
-    
-    conn.commit()
-    conn.close()
-
-    return True, "Account Created Successfully!"
-
+    with conn.session as s:
+        user = s.execute(
+            text("SELECT * FROM auth WHERE username = :username OR email = :email"), 
+            {"username": username, "email": email}
+        ).fetchone()
+        
+        if user:
+            return False, "Username or Email already exists!"
+        
+        hashed = hash_password(password)
+        s.execute(
+            text("INSERT INTO auth (username, email, password) VALUES (:username, :email, :password)"), 
+            {"username": username, "email": email, "password": hashed}
+        )
+        s.commit()
+        return True, "Account Created Successfully!"
 
 def login_user(username, password):
     conn = create_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM auth WHERE username = ?", (username,))
-    user_auth_row = cursor.fetchone()
-    conn.close()
+    with conn.session as s:
+        user_auth_row = s.execute(
+            text("SELECT * FROM auth WHERE username = :username"), 
+            {"username": username}
+        ).fetchone()
 
     if user_auth_row:
         hashed_password_from_db = user_auth_row[3]
-
         if verify_password(password, hashed_password_from_db):
-            return(user_auth_row[2], user_auth_row[1])
-
+            return (user_auth_row[2], user_auth_row[1])
     return None
 
 def update_username(email, new_username):
     conn = create_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM auth WHERE username = ? AND email = ?", (new_username, email))
-    if cursor.fetchone():
-        conn.close()
-        return False, "The username is already taken!"
-    
-    try:
-        cursor.execute("UPDATE auth SET username = ? WHERE email = ?", (new_username, email))
-        conn.commit()
-        conn.close()
-        return True, "Username updated successfully!"
-    except Exception as e:
-        conn.close()
-        return False, "An error occurred! Please try again later."
+    with conn.session as s:
+        user = s.execute(
+            text("SELECT * FROM auth WHERE username = :username AND email != :email"), 
+            {"username": new_username, "email": email}
+        ).fetchone()
+        
+        if user:
+            return False, "The username is already taken!"
+        
+        try:
+            s.execute(
+                text("UPDATE auth SET username = :username WHERE email = :email"), 
+                {"username": new_username, "email": email}
+            )
+            s.commit()
+            return True, "Username updated successfully!"
+        except Exception as e:
+            return False, "An error occurred! Please try again later."

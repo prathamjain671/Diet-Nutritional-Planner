@@ -1,11 +1,10 @@
 import streamlit as st
 import pandas as pd
 from utils.db import create_connection
-from datetime import datetime
-from zoneinfo import ZoneInfo
 import altair as alt
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info, render_footer
+from sqlalchemy import text
 
 load_css()
 render_sidebar_info(
@@ -19,39 +18,36 @@ user_session = st.session_state.get("user")
 st.title(":material/steps: Your Progress")
 
 conn = create_connection()
-cursor = conn.cursor()
+with conn.session as s:
+    user_email = user_session[0]
+    user_row = s.execute(
+        text("SELECT id FROM users WHERE email = :email"), 
+        {"email": user_email}
+    ).fetchone()
 
-user_email = user_session[0]
+    if not user_row:
+        st.error("User profile not found! Please complete profile setup.")
+        st.stop()
 
-cursor.execute("SELECT id FROM users WHERE email = ?", (user_email,))
-user_row = cursor.fetchone()
+    user_id = user_row[0]
 
-if not user_row:
-    st.error("User profile not found! Please complete profile setup.")
-    conn.close()
-    st.stop()
+    progress = s.execute(
+        text('''
+            SELECT weight, height, age, goal, diet_preference, activity_level, timestamp
+            FROM user_progress
+            WHERE user_id = :uid
+            ORDER BY timestamp DESC
+        '''), {"uid": user_id}
+    ).fetchall()
 
-user_id = user_row[0]
-
-cursor.execute('''
-        SELECT weight, height, age, goal, diet_preference, activity_level, timestamp
-        FROM user_progress
-        WHERE user_id = ?
-        ORDER BY timestamp DESC
-''', (user_id,))
-
-progress = cursor.fetchall()
-
-cursor.execute('''
-        SELECT tdee, bmi, bmi_category, timestamp
-        FROM calculations
-        WHERE user_id = ?
-        ORDER BY timestamp DESC
-''', (user_id,))
-
-calc = cursor.fetchall()
-
-conn.close()
+    calc = s.execute(
+        text('''
+            SELECT tdee, bmi, bmi_category, timestamp
+            FROM calculations
+            WHERE user_id = :uid
+            ORDER BY timestamp DESC
+        '''), {"uid": user_id}
+    ).fetchall()
 
 with st.container(border=True):
     if not progress:
@@ -60,7 +56,7 @@ with st.container(border=True):
         st.subheader("Profile History")
         df_progress = pd.DataFrame(progress, columns=["Weight (kg)", "Height (cm)", "Age", "Goal", "Diet", "Activity", "Date"])
         df_progress["Date"] = pd.to_datetime(df_progress["Date"])
-        df_progress["Date"] = df_progress["Date"].dt.tz_localize("UTC").dt.tz_convert("Asia/Kolkata")
+        df_progress["Date"] = df_progress["Date"].dt.tz_localize("Asia/Kolkata")
         df_progress["Date"] = df_progress["Date"].dt.strftime("%d %b %Y, %I:%M %p")
         st.dataframe(
             df_progress.style.format({
@@ -76,7 +72,7 @@ with st.container(border=True):
         st.subheader("Calculation History")
         df_calc = pd.DataFrame(calc, columns=["TDEE", "BMI", "BMI Category", "Date"])
         df_calc["Date"] = pd.to_datetime(df_calc["Date"])
-        df_calc["Date"] = df_calc["Date"].dt.tz_localize("UTC").dt.tz_convert("Asia/Kolkata")
+        df_calc["Date"] = df_calc["Date"].dt.tz_convert("Asia/Kolkata")
         df_calc["Date"] = df_calc["Date"].dt.strftime("%d %b %Y, %I:%M %p")
         st.dataframe(
             df_calc.style.format({

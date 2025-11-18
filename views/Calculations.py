@@ -1,10 +1,10 @@
 import streamlit as st
-import sqlite3
 from utils.db import create_connection
 from utils.user import User
 from utils.calculations import find_tdee, find_bmi
 from utils.custom_css import load_css
 from utils.ui_helper import render_sidebar_info, render_footer
+from sqlalchemy import text
 
 load_css()
 render_sidebar_info(
@@ -16,41 +16,40 @@ render_sidebar_info(
 user_session = st.session_state.get("user")
 
 conn = create_connection()
-cursor = conn.cursor()
+with conn.session as s:
+    user_email = user_session[0]
+    user_row = s.execute(
+        text("SELECT * FROM users WHERE email = :email"), 
+        {"email": user_email}
+    ).fetchone()
 
-user_email = user_session[0]
+    if not user_row:
+        st.error("User profile not found! Please complete profile setup.")
+        st.stop()
 
-cursor.execute("SELECT * FROM users WHERE email = ?", (user_email,))
-user_row = cursor.fetchone()
+    user_id = user_row[0]
+    saved_user = User(*user_row[1:])
+    saved_user.id = user_id
 
-if not user_row:
-    st.error("User profile not found! Please complete profile setup.")
-    conn.close()
-    st.stop()
+    calc = s.execute(
+        text('''
+            SELECT tdee, bmi, bmi_category, water_intake, timestamp
+            FROM calculations
+            WHERE user_id = :uid
+            ORDER BY timestamp DESC
+            LIMIT 1
+        '''), {"uid": user_id}
+    ).fetchone()
 
-user_id = user_row[0]
-saved_user = User(*user_row[1:])
-saved_user.id = user_id
-
-cursor.execute('''
-        SELECT tdee, bmi, bmi_category, water_intake, timestamp
-        FROM calculations
-        WHERE user_id = ?
-        ORDER BY timestamp DESC
-        LIMIT 1
-''', (user_id,))
-calc = cursor.fetchone()
-
-cursor.execute('''
-        SELECT protein, target_calories, carbs, fats, timestamp
-        FROM macros
-        WHERE user_id = ?
-        ORDER BY timestamp DESC
-        LIMIT 1
-''', (user_id,))
-macro = cursor.fetchone()
-
-conn.close()
+    macro = s.execute(
+        text('''
+            SELECT protein, target_calories, carbs, fats, timestamp
+            FROM macros
+            WHERE user_id = :uid
+            ORDER BY timestamp DESC
+            LIMIT 1
+        '''), {"uid": user_id}
+    ).fetchone()
 
 st.title(":material/camera: Your Latest Health Snapshot")
 st.markdown("---")
