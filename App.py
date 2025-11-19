@@ -129,7 +129,7 @@ else:
     else:
         pages = st.navigation([
             st.Page("views/Dashboard.py", title="Dashboard", icon=":material/dashboard:"),
-            st.Page("views/Profile_Update.py", title="Update Profile", icon=":material/person_edit:"),
+            st.Page("views/Profile_Update.py", title="Health Profile", icon=":material/person_edit:"),
             st.Page("views/Progress.py", title="Progress", icon=":material/chart_data:"),
             st.Page("views/Meal_Planner.py", title="Meal Planner", icon=":material/menu_book_2:"),
             st.Page("views/Set_Goal.py", title="Set Goal", icon=":material/flag:"),

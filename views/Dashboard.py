@@ -270,7 +270,7 @@ with st.container():
     with c4:
         if st.button("View Calculations", width='stretch'):
             st.switch_page("views/Calculations.py")
-        if st.button("Indian Food Info", width='stretch'):
+        if st.button("Food Info", width='stretch'):
             st.switch_page("views/Food_Info.py")
 
 render_footer()
