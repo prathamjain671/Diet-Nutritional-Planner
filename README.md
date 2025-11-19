@@ -9,21 +9,21 @@ A comprehensive web application built with Streamlit that helps users track thei
 
 ## ✨ Key Features
 
-🔐 ###Secure Authentication###: User registration and login system with secure password hashing (bcrypt).
+🔐 *Secure Authentication*: User registration and login system with secure password hashing (bcrypt).
 
-🏠 ###Interactive Dashboard###: A central hub displaying real-time key metrics (Current Weight, Target Calories, Protein Goal) and visual progress charts.
+🏠 *Interactive Dashboard*: A central hub displaying real-time key metrics (Current Weight, Target Calories, Protein Goal) and visual progress charts.
 
-🤖 ###AI Meal Planner###: Generate daily or weekly meal plans tailored to your macros and cuisine preferences using Google Gemini or OpenAI models.
+🤖 *AI Meal Planner*: Generate daily or weekly meal plans tailored to your macros and cuisine preferences using Google Gemini or OpenAI models.
 
-🧮 ###Health Calculators###: Automatically calculates TDEE (Total Daily Energy Expenditure), BMI, and optimal macronutrient splits based on your profile.
+🧮 *Health Calculators*: Automatically calculates TDEE (Total Daily Energy Expenditure), BMI, and optimal macronutrient splits based on your profile.
 
-⚖️ ###Goal Tracking###: Set specific weight loss or gain goals with realistic timelines. The app tracks your progress against these targets.
+⚖️ *Goal Tracking*: Set specific weight loss or gain goals with realistic timelines. The app tracks your progress against these targets.
 
-📈 ###Progress Visualization###: View interactive charts (Altair) for weight trends, BMI changes, and TDEE fluctuations over time.
+📈 *Progress Visualization*: View interactive charts (Altair) for weight trends, BMI changes, and TDEE fluctuations over time.
 
-🥕 ###Food Info Database###: A built-in nutritional lookup tool for common food items (specifically tailored for Indian cuisine).
+🥕 *Food Info Database*: A built-in nutritional lookup tool for common food items (specifically tailored for Indian cuisine).
 
-👤 ###Profile Management###: Easily update your physical stats, activity levels, and dietary preferences to keep your plan accurate.  
+👤 *Profile Management*: Easily update your physical stats, activity levels, and dietary preferences to keep your plan accurate.  
 
 ---
 
@@ -131,57 +131,7 @@ To use the AI meal planner, you'll need at least one API key:
 
 ---
 
-⚙️ Installation Instructions
-Follow these steps to set up the project locally on your machine.
-
-Prerequisites
-Python 3.8+ installed.
-
-A PostgreSQL Database (You can use a free cloud provider like Neon.tech or a local Postgres instance).
-
-1. Clone the Repository
-Bash
-
-git clone https://github.com/your-username/diet-nutritional-planner.git
-cd diet-nutritional-planner
-2. Create a Virtual Environment (Recommended)
-Bash
-
-# Windows
-python -m venv .venv
-.\.venv\Scripts\activate
-
-# macOS/Linux
-python3 -m venv .venv
-source .venv/bin/activate
-3. Install Dependencies
-Bash
-
-pip install -r requirements.txt
-4. Set Up Database Secrets
-Streamlit needs your database connection string to connect to PostgreSQL.
-
-Create a folder named .streamlit in the root directory.
-
-Inside it, create a file named secrets.toml.
-
-Add your PostgreSQL connection string:
-
-Ini, TOML
-
-# .streamlit/secrets.toml
-[connections.db]
-dialect = "postgresql"
-url = "postgresql://username:password@host:port/database_name"
-(Note: Ensure your URL starts with postgresql:// and consider adding ?sslmode=require if using a cloud provider).
-
-5. Run the Application
-Bash
-
-streamlit run App.py
-The application will automatically create the necessary database tables on the first run.
-
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 This project is built using a robust and modern stack:
 
 - Frontend/Framework: Streamlit (Python-based web framework)
@@ -194,11 +144,11 @@ This project is built using a robust and modern stack:
 
 - Data Visualization: Altair (Interactive charts)
 
-- ##Generative AI:
+- *Generative AI*:
 
-    - google-generativeai (Gemini Pro / Flash)
+    - google-generativeai (Gemini Flash)
 
-    - openai (GPT-4o / GPT-4o-mini)
+    - openai (GPT-5.1)
 
 - Authentication: bcrypt (Secure password hashing)
 
