@@ -9,21 +9,21 @@ A comprehensive web application built with Streamlit that helps users track thei
 
 ## ✨ Key Features
 
-🔐 *Secure Authentication*: User registration and login system with secure password hashing (bcrypt).
+🔐 **Secure Authentication:** User registration and login system with secure password hashing (bcrypt).
 
-🏠 *Interactive Dashboard*: A central hub displaying real-time key metrics (Current Weight, Target Calories, Protein Goal) and visual progress charts.
+🏠 **Interactive Dashboard:** A central hub displaying real-time key metrics (Current Weight, Target Calories, Protein Goal) and visual progress charts.
 
-🤖 *AI Meal Planner*: Generate daily or weekly meal plans tailored to your macros and cuisine preferences using Google Gemini or OpenAI models.
+🤖 **AI Meal Planner:** Generate daily or weekly meal plans tailored to your macros and cuisine preferences using Google Gemini or OpenAI models.
 
-🧮 *Health Calculators*: Automatically calculates TDEE (Total Daily Energy Expenditure), BMI, and optimal macronutrient splits based on your profile.
+🧮 **Health Calculators:** Automatically calculates TDEE (Total Daily Energy Expenditure), BMI, and optimal macronutrient splits based on your profile.
 
-⚖️ *Goal Tracking*: Set specific weight loss or gain goals with realistic timelines. The app tracks your progress against these targets.
+⚖️ **Goal Tracking:** Set specific weight loss or gain goals with realistic timelines. The app tracks your progress against these targets.
 
-📈 *Progress Visualization*: View interactive charts (Altair) for weight trends, BMI changes, and TDEE fluctuations over time.
+📈 **Progress Visualization:** View interactive charts (Altair) for weight trends, BMI changes, and TDEE fluctuations over time.
 
-🥕 *Food Info Database*: A built-in nutritional lookup tool for common food items (specifically tailored for Indian cuisine).
+🥕 **Food Info Database:** A built-in nutritional lookup tool for common food items.
 
-👤 *Profile Management*: Easily update your physical stats, activity levels, and dietary preferences to keep your plan accurate.  
+👤 **Profile Management:** Easily update your physical stats, activity levels, and dietary preferences to keep your plan accurate.  
 
 ---
 
@@ -123,7 +123,7 @@ The application will open in your default browser at `http://localhost:8501`.
 
 To use the AI meal planner, you'll need at least one API key:
 
-#### **Option 1: [Google Gemini](https://aistudio.google.com/app/apikey) (Recommended - Free Tier Available)**
+#### **Option 1: [Google Gemini](https://aistudio.google.com/app/apikey) (Free Tier Available)**
 
 #### **Option 2: [OpenAI ChatGPT](https://platform.openai.com/api-keys)**
 
@@ -134,25 +134,25 @@ To use the AI meal planner, you'll need at least one API key:
 ## 🛠️ Tech Stack
 This project is built using a robust and modern stack:
 
-- Frontend/Framework: Streamlit (Python-based web framework)
+- **Frontend/Framework:** Streamlit (Python-based web framework)
 
-- Database: PostgreSQL (Hosted on Cloud)
+- **Database:** PostgreSQL (Hosted on Cloud)
 
-- ORM/Connection: SQLAlchemy & st.connection
+- **ORM/Connection:** SQLAlchemy & st.connection
 
-- Data Processing: Pandas
+- **Data Processing:** Pandas
 
-- Data Visualization: Altair (Interactive charts)
+- **Data Visualization:** Altair (Interactive charts)
 
-- *Generative AI*:
+- **Generative AI:**
 
     - google-generativeai (Gemini Flash)
 
     - openai (GPT-5.1)
 
-- Authentication: bcrypt (Secure password hashing)
+- **Authentication:** bcrypt (Secure password hashing)
 
-- Styling: Custom CSS injection for a polished, dark-themed UI
+- **Styling:** Custom CSS injection for a polished, dark-themed UI
 ---
 
 ## 🤝 Contributing
