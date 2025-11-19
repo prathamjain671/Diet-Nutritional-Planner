@@ -40,7 +40,7 @@ with st.container(border=True):
     st.text_input("Current Weight", value=f"{user.weight:.2f} kg", disabled=True)
 
     
-    if st.button("Update Health Details (Go to Profile Update)"):
+    if st.button("Update Health Details (Go to Health Profile)"):
         st.switch_page("views/Profile_Update.py")
 
 st.divider()

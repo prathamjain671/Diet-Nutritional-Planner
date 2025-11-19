@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.db import create_connection
+from utils.db import create_connection, update_user
 from utils.calculations import weight_loss, weight_gain
 from utils.user import User
 from utils.custom_css import load_css
@@ -42,6 +42,9 @@ else:
 months = st.number_input("In how many months do you want to achieve this?", min_value=1, max_value=100)
 
 if st.button("Set Goal", width=100):
+    user.goal = goal_type.lower()
+    update_user(user)
+    
     if goal_type == "Weight Loss":
         result = weight_loss(user, amount_to_lose=amount, months=months)
     else:

@@ -122,7 +122,7 @@ elif 12 <= hour < 18:
 else:
     greeting = ":material/moon_stars: Good Evening"
 
-st.title(f"{greeting}, {user_session[1]}")
+st.title(f"{greeting}, {user_session[1].capitalize()}")
 st.markdown("Here is your health snapshot for the day.")
 st.divider()
 
@@ -170,7 +170,9 @@ with st.container(border=True):
     st.subheader(":material/sprint: Progress to Your Goal")
     
     if not goal_data:
-        st.info("You haven't set a goal weight yet! Go to 'Set Weight Goal' to create one.")
+        st.info("You haven't set a goal weight yet! Go to 'Set Goal' to create one.")
+        if st.button("Set Weight Goal"):
+            st.switch_page("views/Set_goal.py")
     elif start_weight is None:
         st.info("Log your weight at least once (e.g., in 'Update Profile') to see your progress.")
     else:
@@ -250,7 +252,7 @@ with st.container():
     c1, c2, c3, c4 = st.columns(4)
     
     with c1:
-        if st.button("Update Profile", width='stretch'):
+        if st.button("Update Health Profile", width='stretch'):
             st.switch_page("views/Profile_Update.py")
         if st.button("Set Weight Goal", width='stretch'):
             st.switch_page("views/Set_Goal.py")

@@ -9,7 +9,7 @@ from sqlalchemy import text
 load_css()
 render_sidebar_info(
     icon_path="icons/person_edit.png",
-    title="Profile Update",
+    title="Health Profile",
     text_lines=["Manage your health data like weight, height, activity level, and dietary preferences."]
 )
 

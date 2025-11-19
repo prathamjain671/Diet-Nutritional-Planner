@@ -101,6 +101,9 @@ def weight_loss(user, amount_to_lose=None, months=None):
             )
 
     insert_goal(user.id, "loss", target_weight, months, daily_deficit, target_calories, warning)
+
+    macros = calculate_macros(user)
+    insert_macros(user.id, macros["Protein (g)"], macros["Target Calories"], macros["Carbs (g)"], macros["Fats (g)"])
     
     return warning if warning else message
 
@@ -134,6 +137,9 @@ def weight_gain(user, amount_to_gain, months):
         )
     
     insert_goal(user.id, "gain", target_weight, months, daily_surplus, target_calories, warning)
+
+    macros = calculate_macros(user)
+    insert_macros(user.id, macros["Protein (g)"], macros["Target Calories"], macros["Carbs (g)"], macros["Fats (g)"])
 
     return warning if warning else message
 
