@@ -58,7 +58,10 @@ with st.container(border=True):
         st.subheader("Profile History")
         df_progress = pd.DataFrame(progress, columns=["Weight (kg)", "Height (cm)", "Age", "Goal", "Diet", "Activity", "Date"])
         df_progress["Date"] = pd.to_datetime(df_progress["Date"])
-        df_progress["Date"] = df_progress["Date"].dt.tz_localize("Asia/Kolkata")
+        try:
+            df_progress["Date"] = df_progress["Date"].dt.tz_localize("UTC").dt.tz_convert("Asia/Kolkata")
+        except:
+            df_progress["Date"] = df_progress["Date"].dt.tz_localize("Asia/Kolkata")
         df_progress["Date"] = df_progress["Date"].dt.strftime("%d %b %Y, %I:%M %p")
         st.dataframe(
             df_progress.style.format({
@@ -74,7 +77,10 @@ with st.container(border=True):
         st.subheader("Calculation History")
         df_calc = pd.DataFrame(calc, columns=["TDEE", "BMI", "BMI Category", "Date"])
         df_calc["Date"] = pd.to_datetime(df_calc["Date"])
-        df_calc["Date"] = df_calc["Date"].dt.tz_convert("Asia/Kolkata")
+        try:
+            df_calc["Date"] = df_calc["Date"].dt.tz_localize("UTC").dt.tz_convert("Asia/Kolkata")
+        except:
+            df_calc["Date"] = df_calc["Date"].dt.tz_convert("Asia/Kolkata")
         df_calc["Date"] = df_calc["Date"].dt.strftime("%d %b %Y, %I:%M %p")
         st.dataframe(
             df_calc.style.format({

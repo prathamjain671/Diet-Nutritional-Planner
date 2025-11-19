@@ -55,7 +55,10 @@ with conn.session as s:
             for plan in plans:
                 plan_type, note, meal_plan, timestamp = plan
                 pd_timestamp = pd.to_datetime(timestamp)
-                ist = pd_timestamp.tz_convert("Asia/Kolkata")
+                try:
+                    ist = pd_timestamp.tz_localize("UTC").tz_convert("Asia/Kolkata")
+                except:
+                    ist = pd_timestamp.tz_convert("Asia/Kolkata")
                 time = ist.strftime("%d %b %Y, %I:%M %p")
 
                 with st.expander(f"[{count}] {time} | Type: {plan_type.capitalize()}"):
@@ -86,7 +89,10 @@ with tab2:
         for row in rows:
             goal_type, target_weight, months, change, target_calories, warning, timestamp = row
             pd_timestamp = pd.to_datetime(timestamp)
-            ist = pd_timestamp.tz_convert("Asia/Kolkata")
+            try:
+                ist = pd_timestamp.tz_localize("UTC").tz_convert("Asia/Kolkata")
+            except:
+                ist = pd_timestamp.tz_convert("Asia/Kolkata")
             time = ist.strftime("%d %b %Y, %I:%M %p")
 
             with st.expander(f"{count}. [{time}] • {goal_type.capitalize()} Goal"):

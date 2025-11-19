@@ -205,6 +205,6 @@ If you find this project helpful, please consider giving it a star on GitHub! It
 
 ---
 
-**Made with ❤️ by [Pratham Jain](https://github.com/prathamjain671)**
+**Made with ❤️ by [Pratham Jain](https://linkedin.com/in/prathamjain671)**
 
 *Last Updated: November 2025*

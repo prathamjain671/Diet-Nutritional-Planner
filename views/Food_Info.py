@@ -10,7 +10,7 @@ render_sidebar_info(
     text_lines=["A simple lookup tool for the calories and macros of common food items."]
 )
 
-@st.cache_data
+
 def load_food_data():
     df = pd.read_csv("data/food_db.csv")
     return df
