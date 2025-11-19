@@ -15,7 +15,7 @@ render_sidebar_info(
     title="Dashboard",
     text_lines=[
         "Welcome to the dashboard!",
-        "Here you can view you key metrics, log your weight, navigate to other features and so much more!"]
+        "Here you can view you key metrics, log your weight, navigate to other features and so much more."]
 )
 
 user_session = st.session_state.get("user")

@@ -51,7 +51,9 @@ with conn.session as s:
 
 with st.container(border=True):
     if not progress:
-        st.info("No progress data found!")
+        st.info("No progress data found. Update your weight in 'Health Profile' to start your tracking journey!")
+        if st.button("Update Weight Now"):
+            st.switch_page("views/Profile_Update.py")
     else:
         st.subheader("Profile History")
         df_progress = pd.DataFrame(progress, columns=["Weight (kg)", "Height (cm)", "Age", "Goal", "Diet", "Activity", "Date"])

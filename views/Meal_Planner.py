@@ -69,6 +69,16 @@ if not row:
 user_obj = User(*row[1:])
 user_obj.id = row[0]
 
+goal_row = s.execute(
+        text("SELECT target_calories FROM goals WHERE user_id = :uid ORDER BY timestamp DESC LIMIT 1"),
+        {"uid": user_obj.id}
+    ).fetchone()
+
+if goal_row and goal_row[0]:
+        target_calories = goal_row[0]
+else:
+    target_calories = find_tdee(user_obj)
+
 st.title("Meal Planner")
 
 client = None
@@ -99,11 +109,11 @@ if st.session_state.provider == "OpenAI ChatGPT":
 if client:
     st.subheader("3. Generate Your Plan")
     st.markdown(f"Hello, {user_obj.name}! Lets get your personalized meal plan.")
+    st.info(f"Generating plan for target: **{int(target_calories)} kcal** (based on your goal)")
 
     plan_type = st.radio("Select meal plan type:", ["Daily", "Weekly"] )
     custom_note = st.text_area("Add any specific cooking instructions (optional): ")
 
-    target_calories = find_tdee(user_obj)
     protein_goal = protein_intake(user_obj)
 
     prompt = base_prompt(plan_type, user_obj, target_calories, protein_goal, custom_note)

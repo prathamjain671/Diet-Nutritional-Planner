@@ -1,42 +1,67 @@
 def base_prompt(plan_type, user, target_calories, protein_goal, custom_note):
+    note_content = custom_note.strip() if custom_note else "None"
 
     prompt = f"""
-    Design a {plan_type} {user.diet_preference} meal plan tailored for an individual with the following health metrics:
+    **Role:** Act as an expert nutritionist and chef specializing in authentic Indian cuisine.
+    
+    **Task:** Create a detailed {plan_type} {user.diet_preference} meal plan for a user with the following profile:
 
-    - Daily calorie target: {target_calories} kcal
-    - Daily protein goal: {protein_goal} grams
-    - Weight: {user.weight} kg
-    - Fitness goal: {user.goal.capitalize()}
-    - Dietary preference: {user.diet_preference.capitalize()}
+    **User Profile:**
+    - **Current Weight:** {user.weight} kg
+    - **Fitness Goal:** {user.goal.capitalize()}
+    - **Dietary Preference:** {user.diet_preference.capitalize()}
+    - **Daily Calorie Target:** {target_calories} kcal (Strict Limit)
+    - **Protein Goal:** {protein_goal} grams (High Priority)
 
-    The meal plan should include:
-    - Breakfast
-    - Lunch
-    - Dinner
-    - 1–2 snacks
+    **Custom User Requests:**
+    "{note_content}"
+    *(Note: If this request conflicts with the diet type, prioritize the user's request but try to keep it healthy.)*
 
-    Ensure the meals:
-    - Are high in protein to meet the daily goal
-    - Reflect authentic Indian cuisine, using regional ingredients and traditional flavors
-    - Are balanced with carbohydrates and fats to support the fitness goal
-    - Stay within the daily calorie target
+    **Meal Plan Guidelines:**
+    1. **Structure:** Include Breakfast, Lunch, Dinner, and 1-2 Snacks.
+    2. **Cuisine:** Focus on authentic Indian flavors using regional ingredients.
+    3. **Balance:** Ensure meals are macronutrient-balanced but prioritize hitting the protein goal.
+    4. **Clarity:** Dishes should be practical to cook at home.
 
-    Also remember to use this custom note and if it is empty, just proceed:
-    {custom_note}
+    **Output Format (Use Markdown):**
 
-    Format the response as follows:
-    - List each meal category (Breakfast, Lunch, Dinner, Snack 1, Snack 2) in bold
-    - Under each category, provide:
-      - A brief description of the meal
-      - Approximate macronutrients (protein, carbs, fats) in grams for that specific meal
-    - At the end of the meal plan, include a **Recipes** section in bold
-      - For each meal, list:
-        - The meal name
-        - Ingredients with quantities
-        - Step-by-step preparation instructions
-    - Summarize total daily macronutrients (protein, carbs, fats) and calories at the end of the meal plan
+    ### **Meal Plan Overview**
+    *(Provide a 1-sentence summary of the day's eating philosophy)*
 
-    If specific dishes are unavailable or unclear, suggest alternatives that align with Indian culinary traditions and the dietary preference.
+    ---
+    
+    ### **Breakfast**
+    * **Meal Name:** [Name]
+    * **Description:** [Brief appetizing description]
+    * **Macros:** Protein: [X]g | Carbs: [X]g | Fats: [X]g | Calories: [X] kcal
+
+    *(Repeat this format exactly for **Lunch**, **Snack 1**, **Dinner**, and **Snack 2**)*
+
+    ---
+
+    ### **Recipes & Preparation**
+    *(For each complex meal above, provide the following)*
+    
+    #### **[Meal Name]**
+    * **Prep Time:** [X] mins
+    * **Ingredients:**
+        * [Item 1]
+        * [Item 2]
+    * **Instructions:**
+        1. [Step 1]
+        2. [Step 2]
+
+    ---
+
+    ### **Daily Summary Table**
+    | Metric | Total |
+    | :--- | :--- |
+    | **Calories** | [Total] |
+    | **Protein** | [Total]g |
+    | **Carbs** | [Total]g |
+    | **Fats** | [Total]g |
+
+    **Final Note:** If specific Indian ingredients are hard to find, suggest simple alternatives.
     """
 
     return prompt

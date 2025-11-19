@@ -47,6 +47,8 @@ with conn.session as s:
 
         if not plans:
             st.info("You have no meal plans yet!")
+            if st.button("Make your first meal plan!"):
+                st.switch_page("views/Meal_Planner.py")
         else:
             st.success(f"Showing {len(plans)} saved meal plans")
             count = 1
@@ -77,6 +79,8 @@ with tab2:
 
     if not rows:
         st.info("No past goal records!")
+        if st.button("Set your first goal!"):
+                st.switch_page("views/Set_Goal.py")
     else:
         count = 1
         for row in rows:
