@@ -2,6 +2,7 @@ import streamlit as st
 from utils.db import create_connection
 import pandas as pd
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from utils.calculations import log_weight
 from utils.user import User
 import altair as alt
@@ -54,7 +55,7 @@ with conn.session as s:
         text('SELECT water_intake FROM calculations WHERE user_id = :uid ORDER BY timestamp DESC LIMIT 1'),
         {"uid": user_id}
     ).fetchone()
-    water_goal = water_data[0] if water_data else 0 # Added a check for None
+    water_goal = water_data[0] if water_data else 0
 
     meal_plan_today = s.execute(
             text("""
@@ -113,7 +114,7 @@ if weight_data:
         delta = round(current_weight - previous_weight, 2)
         weight_delta = f"{delta:.2f} kg"
 
-hour = datetime.now().hour
+hour = datetime.now(ZoneInfo("Asia/Kolkata")).hour
 greeting = "Welcome Back"
 if hour < 12:
     greeting = ":material/sunny: Good Morning"
